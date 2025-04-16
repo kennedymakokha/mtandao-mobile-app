@@ -18,4 +18,7 @@ export type Product = {
     shopName: string;
     location: string;
     description?: string;
+    lat?: string,
+    lng?: string
+   
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -9,26 +9,28 @@ import {
     KeyboardAvoidingView,
     Platform,
 } from 'react-native';
-import Input from '../components/input';
+
 import InputContainer from '../components/input';
 import { Product } from '../../types';
-
+import Geolocation from '@react-native-community/geolocation';
+import Icon from 'react-native-vector-icons/FontAwesome5'
+import CameraModal from '../components/cameraModal';
 const AddProductScreen = () => {
-
+    const [visible, setVisible] = useState(false);
     const [image, setImage] = useState('');
-
+    const [useCurrentLocation, setUseCurrentLocation] = useState(true);
     const [item, setItem] = useState({
         name: "",
         price: "",
         shopName: "",
         location: "",
-        description: ""
-    })
-    const { name, price, shopName, location, description } = item
+        description: "",
+        lat: "",
+        lng: "",
 
-    const handlePriceChange = (value: string, name: string) => {
-        setItem(prev => ({ ...prev, [name]: value }));
-    };
+    })
+    const { name, price, lat, lng, shopName, location, description } = item
+
     const handleChange = (key: keyof Product, value: string) => {
         // setMsg({ msg: "", state: "" });
 
@@ -57,7 +59,27 @@ const AddProductScreen = () => {
         console.log('Submitted Product:', product);
         Alert.alert('Success', 'Product added!');
     };
+    useEffect(() => {
+        if (useCurrentLocation) {
+            Geolocation.getCurrentPosition(
+                position => {
+                    const { latitude, longitude } = position.coords;
+                    setItem(prev => ({
+                        ...prev,
+                        lat: latitude.toString(),
+                        lng: longitude.toString()
 
+                    }));
+
+                },
+                error => {
+                    console.warn(error.message);
+                    // Alert.alert('Location Error', error.message);
+                },
+                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+            );
+        }
+    }, [useCurrentLocation]);
     return (
         <KeyboardAvoidingView
             className="flex-1 bg-white"
@@ -69,18 +91,22 @@ const AddProductScreen = () => {
                     Add New Product
                 </Text>
 
-                {/* <TextInput
-                    className="border border-gray-300 rounded-xl px-4 py-3 mb-4 text-base"
-                    placeholder="Product Name"
-                    value={name}
-                    onChangeText={setName}
-                /> */}
+
                 <InputContainer value={name} onchange={(e: any) => handleChange("name", e)} placeholder="Product Name" />
                 <InputContainer value={price} onchange={(e: any) => handleChange("price", e)} placeholder="Product price" />
                 <InputContainer value={shopName} onchange={(e: any) => handleChange("shopName", e)} placeholder="Product Name" />
-
                 <InputContainer value={location} onchange={(e: any) => handleChange("location", e)} placeholder="Product location" />
-                <InputContainer value={description} onchange={(e: any) => handleChange("description", e)} multiline={true} placeholder="Product description" />
+                <TouchableOpacity
+                    activeOpacity={1}
+                    onPress={() => setUseCurrentLocation(!useCurrentLocation)}
+                    className="mb-4 border border-green-600 rounded-xl py-3"
+                >
+                    <Text className="text-center text-green-600 font-medium">
+                        {useCurrentLocation ? 'Switch to Manual Location' : 'Use My Current Location'}
+                    </Text>
+                </TouchableOpacity>
+                <InputContainer editable={!useCurrentLocation} keyboardType="decimal-pad" value={lat} latlng="yes" onchange={(e: any) => handleChange("lat", e)} multiline={true} placeholder="latitude" />
+                <InputContainer editable={!useCurrentLocation} keyboardType="decimal-pad" value={lng} latlng="yes" onchange={(e: any) => handleChange("lng", e)} multiline={true} placeholder="longitude" />
 
 
                 <TextInput
@@ -89,11 +115,14 @@ const AddProductScreen = () => {
                     multiline
                     textAlignVertical="top"
                     value={description}
-                // onChangeText={setDescription}
+                    onChangeText={(e: any) => handleChange("description", e)}
                 />
-
+                <TouchableOpacity activeOpacity={1} onPress={() => setVisible(true)} className={`border border-gray-300 flex items-center justify-center rounded-xl px-4 py-3 mb-4 text-base `}>
+                    <Icon name="camera" className='pr-1 text-green-600' size={26} color="#6b7280" />
+                </TouchableOpacity>
                 <TouchableOpacity
                     onPress={handleSubmit}
+                    activeOpacity={1}
                     className="bg-green-600 rounded-xl py-4 mb-10"
                 >
                     <Text className="text-white text-center text-lg font-semibold">
@@ -101,6 +130,7 @@ const AddProductScreen = () => {
                     </Text>
                 </TouchableOpacity>
             </ScrollView>
+            <CameraModal visible={visible} setVisible={() => setVisible(!visible)} />
         </KeyboardAvoidingView>
     );
 };
