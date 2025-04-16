@@ -1,13 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text, Image } from 'react-native';
 
-const Splashsreen = () => {
+const SplashScreen = () => {
     return (
-        <View className='flex-1 bg-blue-800'>
-            <Text style={{color:"red"}}>Splashsreen</Text>
+        <View className="flex-1 justify-center items-center bg-white">
+            <Image
+                source={require('../assets/logo-1.png')} // replace with your logo
+                className="w-24 h-24 mb-6"
+                resizeMode="contain"
+            />
+            <Text className="text-2xl font-bold text-gray-800">Mtandao</Text>
+            <Text className=''> Best deals and services near you</Text>
         </View>
-    )
-}
+    );
+};
 
-export default Splashsreen
-
+export default SplashScreen;
