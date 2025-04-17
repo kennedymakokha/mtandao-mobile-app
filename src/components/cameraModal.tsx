@@ -17,7 +17,7 @@ const CameraModal = ({ visible, setVisible }: any) => {
     useEffect(() => {
         (async () => {
             let status = await Camera.getCameraPermissionStatus();
-            console.log(status)
+           
             if (status !== 'granted') {
                 status = await Camera.requestCameraPermission();
             }

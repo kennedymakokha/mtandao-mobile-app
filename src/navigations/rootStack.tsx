@@ -8,15 +8,22 @@ import ProductDetailScreen from "../screens/productDetail";
 import { Button, Text, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import AddProductScreen from "../screens/addProduct";
+import Auth from "../screens/auth";
+import { adminStack } from "./adminStack";
 // const Stack = createNativeStackNavigator();
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
+
 function ProductStack() {
     return (
         <Stack.Navigator >
-            <Stack.Screen name="Dashboard"
-
+            <Stack.Screen name="Auth" options={{
+                headerShown: false,
+            }} component={Auth} />
+            <Stack.Screen name="Home"
                 options={({ navigation }) => ({
                     title: 'Dashboard',
+
                     headerRight: () => (
                         <TouchableOpacity
                             onPress={() => navigation.navigate('AddProduct')}
@@ -36,9 +43,15 @@ function ProductStack() {
             <Stack.Screen name="AddProduct" options={{
                 title: "Add Product"
             }} component={AddProductScreen} />
+            <Stack.Screen name="admin" options={{
+
+            }} component={adminStack} />
+
         </Stack.Navigator>
     );
 }
+
+
 
 export function RootStack(firstTime: any) {
     return (
@@ -46,7 +59,11 @@ export function RootStack(firstTime: any) {
             {!firstTime ? (
                 <Stack.Screen options={{ headerShown: false }} name="Onboarding" component={OnboardingScreen} />
             ) : (
-                <Stack.Screen options={{ headerShown: false }} name="Home" component={ProductStack} />
+                <Stack.Screen
+                    options={{ headerShown: false }}
+                    name="Dashboard" // Directly navigating to Dashboard here
+                    component={ProductStack}  // This holds your "Dashboard" as a nested screen
+                />
             )}
         </Stack.Navigator>
     );

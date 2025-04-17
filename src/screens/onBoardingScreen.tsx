@@ -43,7 +43,7 @@ const OnboardingScreen = () => {
     if (currentIndex < slides.length - 1) {
       flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
     } else {
-      navigation.navigate('Home');
+      navigation.navigate("Dashboard")
     }
   };
 
