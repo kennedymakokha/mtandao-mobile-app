@@ -9,29 +9,24 @@ import { Button, Text, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import AddProductScreen from "../screens/addProduct";
 import Auth from "../screens/auth";
-import { adminStack } from "./adminStack";
-// const Stack = createNativeStackNavigator();
+import { AdminStack } from "./adminStack";
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 
 function ProductStack() {
     return (
-        <Stack.Navigator >
+        <Stack.Navigator
+            screenOptions={{
+                headerTransparent: true,
+                headerShadowVisible: false,
+            }} >
             <Stack.Screen name="Auth" options={{
                 headerShown: false,
             }} component={Auth} />
             <Stack.Screen name="Home"
                 options={({ navigation }) => ({
                     title: 'Dashboard',
-
-                    headerRight: () => (
-                        <TouchableOpacity
-                            onPress={() => navigation.navigate('AddProduct')}
-                            style={{ marginRight: 12 }}
-                        >
-                            <Icon name="plus" size={18} color="#900" />
-                        </TouchableOpacity>
-                    ),
                 })}
                 component={HomeScreen} />
             <Stack.Screen
@@ -44,8 +39,8 @@ function ProductStack() {
                 title: "Add Product"
             }} component={AddProductScreen} />
             <Stack.Screen name="admin" options={{
-
-            }} component={adminStack} />
+                headerShown: false
+            }} component={AdminStack} />
 
         </Stack.Navigator>
     );

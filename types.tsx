@@ -13,6 +13,12 @@ export type RootStackParamList = {
 };
 export type AdminStackParamList = {
     admin: undefined;
+    Businesses: undefined
+    Createbusiness: undefined
+    ProductsList: undefined
+    BusinessesDetails: {
+        business: Business;
+    } | undefined | any;
 
 };
 
@@ -27,4 +33,15 @@ export type Product = {
     lat?: string,
     lng?: string
 
+};
+
+export type Business = {
+    id?: any
+    name: string;
+    desc?: string
+    town?: any
+    category: string;
+    lat?: any
+    lng?: any
+    status?: 'Active' | 'Inactive';
 };

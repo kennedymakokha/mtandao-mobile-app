@@ -1,13 +1,13 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const Button = ({ handleLogin, title }: { handleLogin: any, title: any }) => {
+const Button = ({ submit, title }: { submit: any, title: any }) => {
     return (
         <TouchableOpacity activeOpacity={1}
-            className="bg-primary py-3 rounded-xl"
-            onPress={handleLogin}
+            className="bg-secondary py-3 rounded-xl"
+            onPress={submit}
         >
-            <Text className="text-center tracking-widest uppercase font-bold text-primary-50 font-semibold text-lg">
+            <Text className="text-center tracking-widest uppercase font-bold text-primary-700 font-semibold text-lg">
                 {title}
             </Text>
         </TouchableOpacity>

@@ -7,6 +7,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStackParamList } from "../../types";
 import RegisterLogin, { OtpView } from "./components/authComponets/registration";
+import OverlayLoader from "../components/loader";
+import Toast from "../components/toast";
 
 
 
@@ -30,8 +32,8 @@ export default function LoginScreen() {
   const [step, setStep] = useState(1);
   const [user, setUser] = useState({});
   const [item, setItem] = useState<Item>({
-    phone_number: "",
-    password: "",
+    phone_number: "0704977330",
+    password: "makokha1",
     confirm_password: "",
     username: "suggeted",
     code: ""
@@ -141,7 +143,7 @@ export default function LoginScreen() {
           setStep(1)
           setIslogin(true)
           setIsloading(false)
-        }, 2000); // Delay to show success message
+        }, 2000);
       } else {
         setMsg({ msg: data.message || data, state: "error" });
         setIsloading(false)
@@ -161,7 +163,7 @@ export default function LoginScreen() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      {/* {isLoading && <OverlayLoader />} */}
+      {isLoading && <OverlayLoader />}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -172,10 +174,10 @@ export default function LoginScreen() {
               <Image
                 className="w-60 h-60"
                 source={require('./../assets/logo-1.png')}
-                resizeMode="cover" // or 'contain', 'stretch'
+                resizeMode="cover" 
               />
             </View>
-            {/* {msg.msg && <AlertContainer msg={msg.msg} state={msg.state} />} */}
+            {msg.msg && <Toast msg={msg.msg} state={msg.state} />}
             {step === 1 && <RegisterLogin
               item={item}
               handleChange={handleChange}

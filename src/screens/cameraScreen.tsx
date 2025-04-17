@@ -1,7 +1,7 @@
 import { View, Text, Modal, TouchableOpacity } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera'
-import { StyleSheet } from 'nativewind'
+
 
 const CameraScreen = ({ visible, setVisible }: any) => {
     const [cam, setCam] = useState<any>("back")

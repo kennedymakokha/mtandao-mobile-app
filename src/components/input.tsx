@@ -6,7 +6,8 @@ const InputContainer = ({ value, keyboardType, latlng, onchange, editable, multi
     return (
         <View>
             <TextInput
-                className={`border border-gray-300 rounded-xl px-4 py-3 mb-4 text-base ${latlng === "yes" && !editable && "bg-slate-200"}`}
+
+                className={`border border-primary rounded-xl h-[200px] px-4 py-3 mb-4 text-base ${latlng === "yes" && !editable && "bg-slate-200"}`}
                 placeholder={placeholder}
                 value={value}
                 onChangeText={onchange}

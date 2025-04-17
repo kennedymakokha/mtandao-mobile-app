@@ -1,4 +1,6 @@
+import Geolocation from '@react-native-community/geolocation';
 import React, { useEffect, useState } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome5'
 import {
     View,
     Text,
@@ -9,30 +11,34 @@ import {
     KeyboardAvoidingView,
     Platform,
 } from 'react-native';
+import InputContainer from '../../../components/input';
+import { Business, Product } from '../../../../types';
+import Button from '../../../components/button';
+import SelectInput from '../../../components/selectInput';
 
-import InputContainer from '../components/input';
-import { Product } from '../../types';
-import Geolocation from '@react-native-community/geolocation';
-import Icon from 'react-native-vector-icons/FontAwesome5'
-import CameraModal from '../components/cameraModal';
-import Button from '../components/button';
+
 const AddProductScreen = () => {
     const [visible, setVisible] = useState(false);
     const [image, setImage] = useState('');
     const [useCurrentLocation, setUseCurrentLocation] = useState(true);
     const [item, setItem] = useState({
         name: "",
-        price: "",
-        shopName: "",
-        location: "",
-        description: "",
+        desc: "",
+        town: "",
+        category: "",
         lat: "",
         lng: "",
 
     })
-    const { name, price, lat, lng, shopName, location, description } = item
+    const {
+        name,
+        desc,
+        town,
+        category,
+        lat,
+        lng, } = item
 
-    const handleChange = (key: keyof Product, value: string) => {
+    const handleChange = (key: keyof Business, value: string) => {
         // setMsg({ msg: "", state: "" });
 
         setItem(prev => ({
@@ -42,22 +48,14 @@ const AddProductScreen = () => {
     };
     const handleSubmit = () => {
         console.log(item)
-        if (!name || !price || !image || !shopName || !location || !description) {
-            Alert.alert('Missing Fields', 'Please fill in all fields');
-            return;
-        }
+        // if (!name || !price || !image || !shopName || !location || !description) {
+        //     Alert.alert('Missing Fields', 'Please fill in all fields');
+        //     return;
+        // }
 
-        const product = {
-            id: Date.now().toString(),
-            name,
-            price: parseFloat(price),
-            image,
-            shopName,
-            location,
-            description,
-        };
 
-        console.log('Submitted Product:', product);
+
+        console.log('Submitted Product:', item);
         Alert.alert('Success', 'Product added!');
     };
     useEffect(() => {
@@ -89,10 +87,17 @@ const AddProductScreen = () => {
         >
             <ScrollView className="px-4 pt-6">
                 <InputContainer value={name} onchange={(e: any) => handleChange("name", e)} placeholder="Product Name" />
-                <InputContainer value={price} onchange={(e: any) => handleChange("price", e)} placeholder="Product price" />
-                <InputContainer value={shopName} onchange={(e: any) => handleChange("shopName", e)} placeholder="Product Name" />
-                <InputContainer value={location} onchange={(e: any) => handleChange("location", e)} placeholder="Product location" />
-                {/* <TouchableOpacity
+                <SelectInput
+                    label="Select Category"
+                    value={category}
+                    onChange={(e: any) => handleChange("category", e)}
+                    options={[
+                        { label: 'Cosmetics', value: 'Cosmetics' },
+                        { label: 'Agriculture', value: 'Agriculture' },
+                        { label: 'Stationaries', value: 'Stationaries' },
+                    ]}
+                />
+                <TouchableOpacity
                     activeOpacity={1}
                     onPress={() => setUseCurrentLocation(!useCurrentLocation)}
                     className="mb-4 border border-green-600 rounded-xl py-3"
@@ -103,24 +108,31 @@ const AddProductScreen = () => {
                 </TouchableOpacity>
                 <InputContainer editable={!useCurrentLocation} keyboardType="decimal-pad" value={lat} latlng="yes" onchange={(e: any) => handleChange("lat", e)} multiline={true} placeholder="latitude" />
                 <InputContainer editable={!useCurrentLocation} keyboardType="decimal-pad" value={lng} latlng="yes" onchange={(e: any) => handleChange("lng", e)} multiline={true} placeholder="longitude" />
- */}
 
+                <SelectInput
+                    label="Select Town"
+                    value={town}
+                    onChange={(e: any) => handleChange("town", e)}
+                    options={[
+                        { label: 'Kitale', value: 'Kitale' },
+                        { label: 'Mombasa', value: 'Mombasa' },
+                        { label: 'Nairobi', value: 'Nairobi' },
+                    ]}
+                />
                 <TextInput
                     className="border border-primary rounded-xl px-4 py-3 mb-6 text-base h-28"
                     placeholder="Description"
                     multiline
                     textAlignVertical="top"
-                    value={description}
-                    onChangeText={(e: any) => handleChange("description", e)}
+                    value={desc}
+                    onChangeText={(e: any) => handleChange("desc", e)}
                 />
-                <TouchableOpacity activeOpacity={1} onPress={() => setVisible(true)} className={`border border-gray-300 flex items-center justify-center rounded-xl px-4 py-3 mb-4 text-base `}>
-                    <Icon name="camera" className='pr-1 text-scondary' size={26} color="#3fa41a" />
-                </TouchableOpacity>
 
-                <Button title="Submit Product" submit={handleSubmit} />
-               
+
+                <Button title="Submit" submit={handleSubmit} />
+
             </ScrollView>
-            <CameraModal visible={visible} setVisible={() => setVisible(!visible)} />
+
         </KeyboardAvoidingView>
     );
 };

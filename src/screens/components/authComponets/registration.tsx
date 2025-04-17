@@ -33,7 +33,7 @@ const RegisterLogin = ({ item, handleChange, handleLogin, setIslogin, hide, setH
                 onChangeText={(text: string) => handleChange("confirm_password", text)}
                 keyboard="text"
             />}
-            <Button title="login" handleLogin={handleLogin} />
+            <Button title="login" submit={handleLogin} />
             <View className="flex flex-row  py-2 justify-center gap-x-4">
                 <Text className="text-black">{islogin ? "Dont have an account yet" : "Have an account already"}</Text>
                 <TouchableOpacity activeOpacity={1} onPress={() => setIslogin(!islogin)} >
@@ -59,7 +59,7 @@ export const OtpView = ({ item, handleChange, handleLogin, setIslogin, hide, set
             />
 
 
-            <Button title="confirm otp" handleLogin={handleLogin} />
+            <Button title="confirm otp" submit={handleLogin} />
             <View className="flex flex-row  py-2 justify-center gap-x-4">
 
                 <TouchableOpacity activeOpacity={1} onPress={() => setIslogin(!islogin)} >
