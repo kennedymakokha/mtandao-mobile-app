@@ -27,7 +27,7 @@ export function RootDrawer() {
                 drawerType: 'slide',
             }}
         >
-            <Drawer.Screen name="admin" component={AdminDashboard} />
+            <Drawer.Screen name="admindashboad" component={AdminDashboard} />
             {/*<Drawer.Screen name="transactions" component={Transactions} /> */}
             {/* <Drawer.Screen name="Profile" component={ProfileScreen} /> */}
         </Drawer.Navigator>

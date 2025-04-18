@@ -4,10 +4,10 @@ import { TextInput } from 'react-native'
 import Icon from 'react-native-vector-icons/Entypo'
 const InputContainer = ({ value, keyboardType, latlng, onchange, editable, multiline, placeholder }: { latlng?: string, keyboardType?: string | any, editable?: boolean, multiline?: boolean, value: string, onchange: any, placeholder: string }) => {
     return (
-        <View>
+        <View className={`flex w-full  h-20  mb-4 rounded-lg bg-primary-50  ${latlng === "yes" && !editable && "bg-slate-300"} justify-center`}>
             <TextInput
 
-                className={`border border-primary rounded-xl h-[200px] px-4 py-3 mb-4 text-base ${latlng === "yes" && !editable && "bg-slate-200"}`}
+                className={` px-4 py-3 text-lg font-bold text-base rounded-lg `}
                 placeholder={placeholder}
                 value={value}
                 onChangeText={onchange}
@@ -27,7 +27,7 @@ export const Input = ({ placeholder, value, onChangeText, keyboard, label, hide,
             {label && <Text className='px-2  tracking-widest pt-2 uppercase text-primary font-bold'>{label}</Text>}
             <View className="flex flex-row  items-center justify-between px-4">
                 <TextInput
-                    className=" rounded-xl text-primary"
+                    className=" rounded-xl h-full text-primary"
                     placeholder={placeholder}
                     placeholderTextColor="#999"
                     secureTextEntry={hide}

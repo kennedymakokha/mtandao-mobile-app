@@ -13,6 +13,7 @@ export type RootStackParamList = {
 };
 export type AdminStackParamList = {
     admin: undefined;
+    adminDrawer:undefined
     Businesses: undefined
     Createbusiness: undefined
     ProductsList: undefined

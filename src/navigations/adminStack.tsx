@@ -18,7 +18,7 @@ export function AdminStack() {
             headerTransparent: true,
             headerShadowVisible: false,
         }}>
-            <Stack.Screen name="admin" options={{
+            <Stack.Screen name="adminDrawer" options={{
                 headerShown: false,
             }} component={RootDrawer} />
             <Stack.Screen name="Createbusiness" options={{

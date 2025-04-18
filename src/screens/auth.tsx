@@ -7,7 +7,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStackParamList } from "../../types";
 import RegisterLogin, { OtpView } from "./components/authComponets/registration";
-import OverlayLoader from "../components/loader";
+import OverlayLoader, { FormLoader } from "../components/loader";
 import Toast from "../components/toast";
 
 
@@ -88,16 +88,24 @@ export default function LoginScreen() {
           }
         }
         setMsg({ msg: `${islogin ? "Login successful! Redirecting..." : "Registration successful! Please verify your account."}`, state: "success" });
-        setIsloading(false)
-        setTimeout(() => {
-          if (islogin) {
-            navigation.navigate("admin");
-          } else {
-            setStep(2);
-            setIslogin(false);
+        if (islogin) {
+          navigation.navigate("admin");
+          setIsloading(false)
+        } else {
+          setStep(2);
+          setIslogin(false);
 
-          }
-        }, 2000);
+        }
+        // setTimeout(() => {
+        //   if (islogin) {
+        //     navigation.navigate("admin");
+        //     setIsloading(false)
+        //   } else {
+        //     setStep(2);
+        //     setIslogin(false);
+
+        //   }
+        // }, 2000);
 
       } else {
         if (data === "Kindly activate your account to continue") {
@@ -163,7 +171,8 @@ export default function LoginScreen() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      {isLoading && <OverlayLoader />}
+
+      {isLoading && <FormLoader />}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -174,7 +183,7 @@ export default function LoginScreen() {
               <Image
                 className="w-60 h-60"
                 source={require('./../assets/logo-1.png')}
-                resizeMode="cover" 
+                resizeMode="cover"
               />
             </View>
             {msg.msg && <Toast msg={msg.msg} state={msg.state} />}

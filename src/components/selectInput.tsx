@@ -36,10 +36,13 @@ const SelectInput: React.FC<Props> = ({ label, options, value, onChange }) => {
 
   return (
     <View className="mb-4 z-10">
+      
       {label && <Text className="text-sm text-gray-500 mb-1">{label}</Text>}
 
       <TouchableOpacity
-        className="flex-row items-center justify-between border border-gray-300 rounded-lg px-4 py-3 bg-white"
+      activeOpacity={1}
+        className="flex w-full  h-20   bg-primary-50   
+        flex-row items-center justify-between border border-gray-300 rounded-lg px-4 py-3 "
         onPress={() => setOpen((prev) => !prev)}
       >
         <Text className="text-base text-gray-800">{selectedLabel}</Text>
@@ -52,13 +55,14 @@ const SelectInput: React.FC<Props> = ({ label, options, value, onChange }) => {
             placeholder="Type to filter..."
             value={search}
             onChangeText={setSearch}
-            className="px-4 py-2 border-b border-gray-200 text-gray-700"
+            className="px-4 py-2 text-lg border-b h-20 border-gray-200 text-gray-700"
           />
           <FlatList
             data={filtered}
             keyExtractor={(item) => item.value.toString()}
             renderItem={({ item }) => (
               <TouchableOpacity
+              activeOpacity={1}
                 className="px-4 py-3 border-b border-gray-100"
                 onPress={() => {
                   onChange(item.value);
@@ -66,7 +70,7 @@ const SelectInput: React.FC<Props> = ({ label, options, value, onChange }) => {
                   setSearch('');
                 }}
               >
-                <Text className="text-base text-gray-800">{item.label}</Text>
+                <Text className="text-base text-lg text-gray-800">{item.label}</Text>
               </TouchableOpacity>
             )}
             style={{ maxHeight: 200 }}

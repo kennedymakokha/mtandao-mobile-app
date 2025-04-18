@@ -17,10 +17,9 @@ const cardSpacing = 16;
 const screenWidth = Dimensions.get('window').width;
 const cardWidth = (screenWidth - cardSpacing * 3) / 2;
 const Button = ({ icon, action, bg, title }: any) => {
-
-
     return (
         <TouchableOpacity
+        activeOpacity={1}
             className={`${bg ? bg : "border border-primary="} mx-1 px-3 py-1.5 rounded-md flex-1 items-center justify-center`}
             onPress={action}
         >
