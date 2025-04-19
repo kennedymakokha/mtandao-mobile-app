@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@mapbox/polyline": "^1.2.1",
     "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-native-community/geolocation": "^3.4.0",
     "@react-navigation/drawer": "^7.3.9",
@@ -19,6 +20,7 @@
     "nativewind": "^4.1.23",
     "react": "19.0.0",
     "react-native": "0.79.0",
+    "react-native-dotenv": "^3.4.11",
     "react-native-geolocation-service": "^5.3.1",
     "react-native-gesture-handler": "^2.25.0",
     "react-native-google-places-autocomplete": "^2.5.7",
@@ -43,6 +45,7 @@
     "@react-native/metro-config": "0.79.0",
     "@react-native/typescript-config": "0.79.0",
     "@types/jest": "^29.5.13",
+    "@types/mapbox__polyline": "^1.0.5",
     "@types/react": "^19.0.0",
     "@types/react-test-renderer": "^19.0.0",
     "eslint": "^8.19.0",

@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RootStack } from './src/navigations/rootStack';
 import SplashScreen from './src/screens/splashsreen';
-import { RootStackParamList } from './types';
+
 
 import "./global.css"
 import Geolocation from '@react-native-community/geolocation';
 import { PermissionsAndroid } from 'react-native';
+import { UserProvider } from './src/context/UserContext';
+import { SearchProvider } from './src/context/searchContext';
 
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -69,16 +71,20 @@ const App = () => {
       console.warn(err);
     }
   };
-    useEffect(() => {
-      requestCameraPermission();
-    }, []);
-  
+  useEffect(() => {
+    requestCameraPermission();
+  }, []);
+
   if (loading) return <SplashScreen />;
 
   return (
-    <NavigationContainer>
-      <RootStack firstTime={firstTime} />
-    </NavigationContainer>
+    <SearchProvider>
+      <NavigationContainer>
+        <UserProvider>
+          <RootStack firstTime={firstTime} />
+        </UserProvider>
+      </NavigationContainer>
+    </SearchProvider>
   );
 };
 

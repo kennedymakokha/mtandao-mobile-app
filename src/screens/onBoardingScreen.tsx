@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,10 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../types';
-
+import { authorizedFetch } from '../utils/authorizedFetch';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useUser } from '../context/UserContext';
+import { API_URL, SOME_SECRET } from '@env';
 
 const { width } = Dimensions.get('window');
 
@@ -29,6 +32,7 @@ const slides: Slide[] = [
 ];
 
 const OnboardingScreen = () => {
+  const { user, setUser, logout } = useUser();
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef<Animated.FlatList<Slide>>(null);
@@ -43,7 +47,7 @@ const OnboardingScreen = () => {
     if (currentIndex < slides.length - 1) {
       flatListRef.current?.scrollToIndex({ index: currentIndex + 1 });
     } else {
-      navigation.navigate("Dashboard")
+      navigation.navigate("Auth")
     }
   };
 
@@ -58,7 +62,27 @@ const OnboardingScreen = () => {
       <Text className="text-lg text-center mt-4 text-gray-600">{item.description}</Text>
     </View>
   );
-
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await authorizedFetch(`${API_URL}/api/auth`);
+        if (res?.userId) {
+          setUser(res)
+          await AsyncStorage.setItem("userId", res?.userId);
+          navigation.navigate('Dashboard');
+          console.log("logged in")
+          // navigation.navigate('admin');
+        } else {
+          console.log(" not logged in")
+          // navigation.navigate('Dashboard');
+        }
+      } catch (e) {
+        console.error(e);
+        // navigation.navigate('Dashboard');
+      }
+    };
+    checkAuth();
+  }, []);
   return (
     <View className="flex-1 bg-white">
       <Animated.FlatList

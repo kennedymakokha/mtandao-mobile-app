@@ -10,6 +10,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import AddProductScreen from "../screens/addProduct";
 import Auth from "../screens/auth";
 import { AdminStack } from "./adminStack";
+import LoginScreen from "../screens/auth";
+import { RootDrawer } from "./drawer";
+import { truncate } from "../utils/trancate";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -24,6 +27,9 @@ function ProductStack() {
             <Stack.Screen name="Auth" options={{
                 headerShown: false,
             }} component={Auth} />
+            <Stack.Screen name="Onboarding" options={{
+                headerShown: false,
+            }} component={OnboardingScreen} />
             <Stack.Screen name="Home"
                 options={({ navigation }) => ({
                     title: 'Dashboard',
@@ -46,20 +52,38 @@ function ProductStack() {
     );
 }
 
-
-
 export function RootStack(firstTime: any) {
     return (
-        <Stack.Navigator screenOptions={{}}>
-            {!firstTime ? (
-                <Stack.Screen options={{ headerShown: false }} name="Onboarding" component={OnboardingScreen} />
-            ) : (
-                <Stack.Screen
-                    options={{ headerShown: false }}
-                    name="Dashboard" // Directly navigating to Dashboard here
-                    component={ProductStack}  // This holds your "Dashboard" as a nested screen
-                />
-            )}
+        <Stack.Navigator  screenOptions={{
+            headerTransparent: true,
+            headerShadowVisible: false,
+        }}>
+            <Stack.Screen options={{ headerShown: false }} name="Onboarding" component={OnboardingScreen} />
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Splash"
+                component={firstTime ? OnboardingScreen : LoginScreen}  // This holds your "Dashboard" as a nested screen
+            />
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Auth"
+                component={LoginScreen}  // This holds your "Dashboard" as a nested screen
+            />
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Dashboard"
+                component={RootDrawer}  // This holds your "Dashboard" as a nested screen
+            />
+            <Stack.Screen name="Product_detail"
+                options={({ route, navigation }: any) => {
+                    console.log(route)
+                    return {
+                        title: `${truncate(route.params.product.name, 20)}`,
+
+                    }
+                }}
+                component={ProductDetail} />
+
         </Stack.Navigator>
     );
 }

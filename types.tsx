@@ -1,19 +1,20 @@
 export type RootStackParamList = {
     Home: undefined;
     Onboarding: undefined;
+    Splash: undefined
     Dashboard: undefined
     AddProduct: undefined
+
     Auth: undefined
     admin: undefined
     Product_detail: {
         product: Product;
     } | undefined | any;
-    // Product_detail: { userId: string };
-    // Add other routes here
+
 };
 export type AdminStackParamList = {
     admin: undefined;
-    adminDrawer:undefined
+    adminDrawer: undefined
     Businesses: undefined
     Createbusiness: undefined
     ProductsList: undefined
@@ -24,15 +25,16 @@ export type AdminStackParamList = {
 };
 
 export type Product = {
+    town: string;
     id: string;
     name: string;
     price: number;
-    image: string;
-    shopName: string;
-    location: string;
+    images?: string[]|any;
+    shopName?: string;
+    location?: string;
     description?: string;
-    lat?: string,
-    lng?: string
+    lat?: any | number,
+    lng?: any | number
 
 };
 

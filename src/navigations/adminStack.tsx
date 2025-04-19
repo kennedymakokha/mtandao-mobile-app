@@ -21,10 +21,13 @@ export function AdminStack() {
             <Stack.Screen name="adminDrawer" options={{
                 headerShown: false,
             }} component={RootDrawer} />
-            <Stack.Screen name="Createbusiness" options={{
-                // headerShown: false,
-                title: "Add Business"
-            }} component={CreateBusiness} />
+            <Stack.Screen name="Createbusiness"
+                options={({ route, navigation }: any) => {
+                    return {
+                        title: `${route.params ? `Edit ${truncate(route.params.item.name, 20)}` : "Add Business"}`
+                    }
+                }}
+                component={CreateBusiness} />
             <Stack.Screen name="Businesses"
                 options={({ navigation }) => ({
                     title: "My businesses",

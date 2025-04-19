@@ -17,9 +17,8 @@ import Button from '../../../components/button';
 import SelectInput from '../../../components/selectInput';
 
 
-const AddProductScreen = () => {
-    const [visible, setVisible] = useState(false);
-    const [image, setImage] = useState('');
+const AddProductScreen: React.FC = ({ route, navigation }: any) => {
+
     const [useCurrentLocation, setUseCurrentLocation] = useState(true);
     const [item, setItem] = useState({
         name: "",
@@ -59,7 +58,7 @@ const AddProductScreen = () => {
         Alert.alert('Success', 'Product added!');
     };
     useEffect(() => {
-        if (useCurrentLocation) {
+        if (useCurrentLocation && route.params === undefined) {
             Geolocation.getCurrentPosition(
                 position => {
                     const { latitude, longitude } = position.coords;
@@ -79,13 +78,29 @@ const AddProductScreen = () => {
             );
         }
     }, [useCurrentLocation]);
+    useEffect(() => {
+        if (route.params !== undefined) {
+            const { item } = route.params
+            setItem({
+                name: item.name,
+                desc: item.desc,
+                town: item.town,
+                category: item.category,
+                lat: item.lat,
+                lng: item.lng,
+
+
+            })
+        }
+    }, [])
+
     return (
         <KeyboardAvoidingView
             className="flex-1 bg-white pt-[100px]"
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
         >
-            <ScrollView className="px-4 pt-6">
+            <ScrollView className="px-4 ">
                 <InputContainer value={name} onchange={(e: any) => handleChange("name", e)} placeholder="Product Name" />
                 <SelectInput
                     label="Select Category"
@@ -129,7 +144,7 @@ const AddProductScreen = () => {
                 />
 
 
-                <Button title="Submit" submit={handleSubmit} />
+                <Button title={route.params !== undefined ? "update" : "Submit"} submit={handleSubmit} />
 
             </ScrollView>
 

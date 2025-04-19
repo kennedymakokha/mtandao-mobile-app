@@ -9,12 +9,12 @@ import { RootStackParamList } from "../../types";
 import RegisterLogin, { OtpView } from "./components/authComponets/registration";
 import OverlayLoader, { FormLoader } from "../components/loader";
 import Toast from "../components/toast";
-
-
-
+import { useUser } from "../context/UserContext"
+import { API_URL, SOME_SECRET } from '@env';
 
 export default function LoginScreen() {
 
+  const { user, setUser, logout } = useUser();
   type Item = {
     phone_number: string;
     password: string;
@@ -30,10 +30,10 @@ export default function LoginScreen() {
   const [msg, setMsg] = useState({ msg: "", state: "" });
 
   const [step, setStep] = useState(1);
-  const [user, setUser] = useState({});
+
   const [item, setItem] = useState<Item>({
-    phone_number: "0704977330",
-    password: "makokha1",
+    phone_number: "",
+    password: "",
     confirm_password: "",
     username: "suggeted",
     code: ""
@@ -68,7 +68,7 @@ export default function LoginScreen() {
         return;
       }
 
-      const endpoint = islogin ? "https://api.marapesa.com/api/auth/login" : "https://api.marapesa.com/api/auth/register";
+      const endpoint = islogin ? `${API_URL}/api/auth/login` : `${API_URL}/api/auth/register`;
 
       const response = await fetch(endpoint, {
         method: "POST",
@@ -89,7 +89,7 @@ export default function LoginScreen() {
         }
         setMsg({ msg: `${islogin ? "Login successful! Redirecting..." : "Registration successful! Please verify your account."}`, state: "success" });
         if (islogin) {
-          navigation.navigate("admin");
+          navigation.navigate("Dashboard");
           setIsloading(false)
         } else {
           setStep(2);
@@ -136,7 +136,7 @@ export default function LoginScreen() {
         return;
       }
       item.code = item.otp
-      const response = await fetch("https://api.marapesa.com/api/auth/activate-user", {
+      const response = await fetch(`${API_URL}/api/auth/activate-user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
