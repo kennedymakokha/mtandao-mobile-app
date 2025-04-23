@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../types';
+import { authStackParamList } from '../../types';
 
 type User = {
   id: string;
@@ -22,7 +22,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUserState] = useState<User | null>(null);
-  type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+  type NavigationProp = NativeStackNavigationProp<authStackParamList>;
   const navigation = useNavigation<NavigationProp>();
   const setUser = async (user: User | null) => {
     if (user) {

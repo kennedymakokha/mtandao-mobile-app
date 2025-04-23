@@ -1,28 +1,27 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-import { AdminStackParamList } from "../../types";
-
+import Icon from "react-native-vector-icons/FontAwesome5";
+import { vendorStackParamList } from "../../types";
 import { RootDrawer } from "./drawer";
-import BusinesScreen from "../screens/vendor/business";
-import ProductsList from "../screens/client";
 import { truncate } from "../utils/trancate";
-import { TouchableOpacity } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome5'
 import CreateBusiness from "../screens/vendor/business/createBusiness";
-import { DashboardScreen } from "../screens/admin";
-const Stack = createNativeStackNavigator<AdminStackParamList>();
+import VendorDashboard from "../screens/vendor";
+import Businesses from "../screens/vendor/business";
+import { TouchableOpacity } from "react-native";
+import SearchBar from "../components/searchBar";
+
+const Stack = createNativeStackNavigator<vendorStackParamList>();
 
 
-export function AdminStack() {
+
+export function VendorStack() {
     return (
         <Stack.Navigator screenOptions={{
             headerTransparent: true,
             headerShadowVisible: false,
         }}>
-            <Stack.Screen name="adminDrawer" options={{
-                
+            <Stack.Screen name="AdminDashboard" options={{
                 headerShown: false,
-            }} component={DashboardScreen} />
+            }} component={VendorDashboard} />
             <Stack.Screen name="Createbusiness"
                 options={({ route, navigation }: any) => {
                     return {
@@ -31,6 +30,7 @@ export function AdminStack() {
                 }}
                 component={CreateBusiness} />
             <Stack.Screen name="Businesses"
+
                 options={({ navigation }) => ({
                     title: "",
                     headerRight: () => (
@@ -41,9 +41,12 @@ export function AdminStack() {
                             <Icon name="plus" size={18} color="#ffaa1d" />
                         </TouchableOpacity>
                     ),
+                    headerLeft: () => (
+                        <SearchBar title="products" />
+                    ),
                 })}
-                component={BusinesScreen} />
-            <Stack.Screen name="BusinessesDetails"
+                component={Businesses} />
+            {/* <Stack.Screen name="BusinessesDetails"
                 options={({ route }: any) => {
                     return {
                         title: route.params.item.name
@@ -64,13 +67,10 @@ export function AdminStack() {
                         ),
                     }
                 }}
-                component={ProductsList} />
+                component={ProductsList} /> */}
 
         </Stack.Navigator>
     );
 }
-
-
-
 
 

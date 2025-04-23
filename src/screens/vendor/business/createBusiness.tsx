@@ -17,7 +17,7 @@ import Button from '../../../components/button';
 import SelectInput from '../../../components/selectInput';
 
 
-const AddProductScreen: React.FC = ({ route, navigation }: any) => {
+const CreateBusiness: React.FC = ({ route, navigation }: any) => {
 
     const [useCurrentLocation, setUseCurrentLocation] = useState(true);
     const [item, setItem] = useState({
@@ -152,4 +152,4 @@ const AddProductScreen: React.FC = ({ route, navigation }: any) => {
     );
 };
 
-export default AddProductScreen;
+export default CreateBusiness;

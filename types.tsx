@@ -1,16 +1,35 @@
-export type RootStackParamList = {
-    Home: undefined;
+// export type RootStackParamList = {
+//     Home: undefined;
+//     Onboarding: undefined;
+//     Splash: undefined
+//     Dashboard: undefined
+//     AddProduct: undefined
+
+//     Auth: undefined
+//     admin: undefined
+
+// };
+export type authStackParamList = {
     Onboarding: undefined;
     Splash: undefined
-    Dashboard: undefined
-    AddProduct: undefined
-
     Auth: undefined
-    admin: undefined
+    Home: undefined
+    Root: undefined
+};
+export type clientStackParamList = {
+    clientDashboard: undefined;
     Product_detail: {
         product: Product;
     } | undefined | any;
 
+};
+export type vendorStackParamList = {
+    AdminDashboard: undefined;
+    Createbusiness: undefined;
+    Businesses: undefined
+    BusinessesDetails: {
+        product: Product;
+    } | undefined | any;
 };
 export type AdminStackParamList = {
     admin: undefined;
@@ -29,7 +48,7 @@ export type Product = {
     id: string;
     name: string;
     price: number;
-    images?: string[]|any;
+    images?: string[] | any;
     shopName?: string;
     location?: string;
     description?: string;
@@ -46,5 +65,20 @@ export type Business = {
     category: string;
     lat?: any
     lng?: any
-    status?: 'Active' | 'Inactive';
+    status?: boolean|any;
 };
+
+export type User = {
+    id?: any
+    confirm_password?: any
+
+    fullname?: string
+    role?: "admin" | "superAdmin" | "client";
+
+    phone_number?: string,
+    password?: string,
+    username?: string,
+    otp?: string
+    code?: string
+
+}

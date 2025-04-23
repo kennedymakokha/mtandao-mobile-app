@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RootStack } from './src/navigations/rootStack';
 import SplashScreen from './src/screens/splashsreen';
-
-
 import "./global.css"
 import Geolocation from '@react-native-community/geolocation';
 import { PermissionsAndroid } from 'react-native';
 import { UserProvider } from './src/context/UserContext';
 import { SearchProvider } from './src/context/searchContext';
-
+import { RootStack } from './src/navigations/authStack.Navigator';
+import { AuthProvider } from './src/context/AuthContext';
+import { Provider } from 'react-redux';
+import { persistor, store } from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { MenuProvider } from 'react-native-popup-menu';
 
 
 
@@ -78,13 +79,21 @@ const App = () => {
   if (loading) return <SplashScreen />;
 
   return (
-    <SearchProvider>
-      <NavigationContainer>
-        <UserProvider>
-          <RootStack firstTime={firstTime} />
-        </UserProvider>
-      </NavigationContainer>
-    </SearchProvider>
+    <MenuProvider>
+      <SearchProvider>
+        <NavigationContainer>
+          <AuthProvider>
+            <UserProvider>
+              <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                  <RootStack firstTime={firstTime} />
+                </PersistGate>
+              </Provider>
+            </UserProvider>
+          </AuthProvider>
+        </NavigationContainer>
+      </SearchProvider>
+    </MenuProvider>
   );
 };
 

@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Image, PermissionsAndroid, Platform, ActivityIndicator, FlatList, Dimensions } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-import { Product } from '../../types';
+import { Product } from '../../../types';
 import polyline from '@mapbox/polyline';
-import { useUser } from '../context/UserContext';
+import { useUser } from '../../context/UserContext';
 // const ProductDetail = ({ product }: { product: Product }) => {
 const ProductDetail: React.FC = ({ route, navigation }: any) => {
     const { product } = route.params;

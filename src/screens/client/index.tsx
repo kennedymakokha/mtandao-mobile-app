@@ -34,7 +34,7 @@ const products: Product[] = [
   },
 ];
 
-const ProductsList: React.FC = () => {
+const ClientDashboard: React.FC = () => {
   const navigation = useNavigation();
 
   const renderItem = ({ item }: { item: Product }) => (
@@ -57,7 +57,7 @@ const ProductsList: React.FC = () => {
 
   return (
     <View className="flex-1 bg-gray-100 pt-[100px]">
-     
+
       <FlatList
         data={products}
         keyExtractor={(item) => item.id}
@@ -69,4 +69,4 @@ const ProductsList: React.FC = () => {
   );
 };
 
-export default ProductsList;
+export default ClientDashboard;

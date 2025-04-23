@@ -1,13 +1,15 @@
 // src/screens/AdminDashboard.tsx
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StatusBar, Alert } from 'react-native';
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import Icon from 'react-native-vector-icons/Ionicons';
+import ActionCard from './business/renderItem';
 
 type Props = {
   navigation: any;
 };
 
-const AdminDashboard: React.FC<Props> = ({ navigation }) => {
+const VendorDashboard: React.FC<Props> = ({ navigation }) => {
   // Dummy data
   const totalBusinesses = 5;
   const totalProducts = 42;
@@ -17,7 +19,7 @@ const AdminDashboard: React.FC<Props> = ({ navigation }) => {
 
       {/* Dashboard Cards */}
       <View className="flex-row justify-between mb-4">
-        {/* Businesses Card */}
+
         <TouchableOpacity
           activeOpacity={1}
           className="bg-primary-100 rounded-2xl p-5 w-[48%]"
@@ -27,8 +29,6 @@ const AdminDashboard: React.FC<Props> = ({ navigation }) => {
           <Text className="text-gray-800 text-lg font-semibold mt-2"> /{totalBusinesses}</Text>
           <Text className="text-gray-600 text-sm">Businesses </Text>
         </TouchableOpacity>
-
-        {/* Products Card */}
         <TouchableOpacity
           activeOpacity={1}
           className="bg-secondary-50 rounded-2xl p-5 w-[48%]"
@@ -38,9 +38,10 @@ const AdminDashboard: React.FC<Props> = ({ navigation }) => {
           <Text className="text-gray-800 text-lg font-semibold mt-2">{totalProducts}</Text>
           <Text className="text-gray-600 text-sm">Products</Text>
         </TouchableOpacity>
+
       </View>
     </ScrollView>
   );
 };
 
-export default AdminDashboard;
+export default VendorDashboard;

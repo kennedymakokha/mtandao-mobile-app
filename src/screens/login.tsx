@@ -5,12 +5,16 @@ import { View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RootStackParamList } from "../../types";
+import { authStackParamList } from "../../types";
 import RegisterLogin, { OtpView } from "./components/authComponets/registration";
 import OverlayLoader, { FormLoader } from "../components/loader";
 import Toast from "../components/toast";
 import { useUser } from "../context/UserContext"
 import { API_URL, SOME_SECRET } from '@env';
+import { useAuth } from "../context/AuthContext";
+import { useActivateMutation, useLoginMutation, useSignupMutation } from "../services/authApi.slice";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../features/auth.slice";
 
 export default function LoginScreen() {
 
@@ -28,19 +32,21 @@ export default function LoginScreen() {
   const [islogin, setIslogin] = useState(true)
   const [isLoading, setIsloading] = useState(false)
   const [msg, setMsg] = useState({ msg: "", state: "" });
-
+  const [loginUser, { isLoading: logingin, error }] = useLoginMutation();
+  const [register, { isLoading: registrationLoading }] = useSignupMutation();
+  const [activate, { isLoading: activationLoading }] = useActivateMutation();
   const [step, setStep] = useState(1);
-
+  const { login, token } = useAuth();
   const [item, setItem] = useState<Item>({
-    phone_number: "",
-    password: "",
+    phone_number: "0720141534",
+    password: "makokha1",
     confirm_password: "",
     username: "suggeted",
     code: ""
   })
-  type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+  type NavigationProp = NativeStackNavigationProp<authStackParamList>;
   const navigation = useNavigation<NavigationProp>();
-
+  const dispatch = useDispatch()
   const handleChange = (key: keyof Item, value: string) => {
     setMsg({ msg: "", state: "" });
 
@@ -68,28 +74,14 @@ export default function LoginScreen() {
         return;
       }
 
-      const endpoint = islogin ? `${API_URL}/api/auth/login` : `${API_URL}/api/auth/register`;
-
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(item)
-      });
-
-      const data = await response.json();
+      const data = islogin ? await loginUser(item).unwrap() : await register(item).unwrap();
 
       if (data.ok === true) {
-        if (islogin) {
-          await AsyncStorage.setItem("accessToken", data.token);
-          if (data?.exp) {
-            await AsyncStorage.setItem("tokenExpiry", data.exp.toString());
-          }
-        }
         setMsg({ msg: `${islogin ? "Login successful! Redirecting..." : "Registration successful! Please verify your account."}`, state: "success" });
+        login(data.token);
         if (islogin) {
-          navigation.navigate("Dashboard");
+          dispatch(setCredentials({ ...data }))
+          navigation.navigate("Home");
           setIsloading(false)
         } else {
           setStep(2);
@@ -167,12 +159,12 @@ export default function LoginScreen() {
     }
   };
   return (
-    <KeyboardAvoidingView className=""
+    <KeyboardAvoidingView className=" bg-primary-600"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
 
-      {isLoading && <FormLoader />}
+      {logingin && <FormLoader />}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
@@ -180,6 +172,7 @@ export default function LoginScreen() {
         >
           <View className="flex-1 justify-center  items-center bg-black-50 px-6">
             <View className="flex-1 items-center justify-center">
+
               <Image
                 className="w-60 h-60"
                 source={require('./../assets/logo-1.png')}

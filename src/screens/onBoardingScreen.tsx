@@ -11,33 +11,62 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../types';
+import { authStackParamList } from '../../types';
 import { authorizedFetch } from '../utils/authorizedFetch';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useUser } from '../context/UserContext';
 import { API_URL, SOME_SECRET } from '@env';
-
+import support from './../assets/slides/support.png'
+import secure from './../assets/slides/Secure.png'
+import sync from './../assets/slides/sync.png'
+import genZ from './../assets/slides/genZ.png'
+import { useAuth } from '../context/AuthContext';
+import { useSelector } from 'react-redux';
 const { width } = Dimensions.get('window');
 
 type Slide = {
   id: string;
   title: string;
+  image: string | any;
   description: string;
 };
 
-const slides: Slide[] = [
-  { id: '1', title: 'Welcome', description: 'This is an awesome app.' },
-  { id: '2', title: 'Scan QR', description: 'Easily scan QR codes.' },
-  { id: '3', title: 'Chat', description: 'Chat in real time with friends.' },
-];
+const slides: Slide[] =
+
+  [
+    {
+      id: '1',
+      description: "This is an awesome app",
+      title: "Real-time notifications",
+      image: genZ, // ✅ No quotes, no template string
+    },
+    {
+      id: '2',
+      description: "This is an awesome app",
+      title: "Secure and private",
+      image: secure,
+    },
+    {
+      id: '3',
+      description: "This is an awesome app",
+      title: "Offline support",
+      image: support,
+    },
+    {
+      id: '4',
+      description: "This is an awesome app",
+      title: "Cross-device sync",
+      image: sync,
+    },
+  ];
 
 const OnboardingScreen = () => {
-  const { user, setUser, logout } = useUser();
+  const { token } = useAuth();
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef<Animated.FlatList<Slide>>(null);
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
+  const navigation = useNavigation<NativeStackNavigationProp<authStackParamList>>();
+  const { user } = useSelector((state: any) => state.auth)
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const index = Math.round(event.nativeEvent.contentOffset.x / width);
     setCurrentIndex(index);
@@ -52,39 +81,23 @@ const OnboardingScreen = () => {
   };
 
   const renderItem = ({ item }: { item: Slide }) => (
-    <View className="w-screen flex-1 items-center justify-center px-6">
+    <View className="w-screen  flex-1 items-center justify-center px-6">
       <Image
-        source={require('../assets/logo-1.png')}
+
+        source={item.image}
         className="w-1/2 h-1/2 mb-6"
         resizeMode="contain"
       />
-      <Text className="text-3xl font-bold text-center text-gray-800">{item.title}</Text>
-      <Text className="text-lg text-center mt-4 text-gray-600">{item.description}</Text>
+      <Text className="text-3xl font-bold text-center text-secondary-200">{item.title}</Text>
+      <Text className="text-lg text-center mt-4 text-slate-200">{item.description}</Text>
     </View>
   );
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await authorizedFetch(`${API_URL}/api/auth`);
-        if (res?.userId) {
-          setUser(res)
-          await AsyncStorage.setItem("userId", res?.userId);
-          navigation.navigate('Dashboard');
-          console.log("logged in")
-          // navigation.navigate('admin');
-        } else {
-          console.log(" not logged in")
-          // navigation.navigate('Dashboard');
-        }
-      } catch (e) {
-        console.error(e);
-        // navigation.navigate('Dashboard');
-      }
-    };
-    checkAuth();
+    if (user) navigation.navigate('Home');
+    
   }, []);
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-primary-600">
       <Animated.FlatList
         ref={flatListRef}
         data={slides}
@@ -128,7 +141,7 @@ const OnboardingScreen = () => {
                 height: 8,
                 borderRadius: 4,
                 marginHorizontal: 4,
-                backgroundColor: '#2563EB', // blue-600
+                backgroundColor: '#ffaa1d',
                 opacity: dotOpacity,
               }}
             />
@@ -136,11 +149,11 @@ const OnboardingScreen = () => {
         })}
       </View>
 
-      {/* Next / Get Started Button */}
+
       <View className="absolute bottom-12 w-full items-center">
         <TouchableOpacity
           onPress={handleNext}
-          className="bg-blue-600 px-8 py-3 rounded-full"
+          className="bg-secondary-500 px-8 py-3 rounded-full"
         >
           <Text className="text-white text-base font-semibold">
             {currentIndex === slides.length - 1 ? 'Get Started' : 'Next'}

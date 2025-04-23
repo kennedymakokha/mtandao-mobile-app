@@ -3,9 +3,20 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useUser } from '../context/UserContext';
+import { useDispatch } from 'react-redux';
+import { useAuth } from '../context/AuthContext';
+import { logout } from '../features/auth.slice';
 
 const CustomDrawer: React.FC<DrawerContentComponentProps> = ({ navigation }) => {
-  const { user, setUser, logout } = useUser();
+
+  const dispatch = useDispatch()
+  const { logout: logoutContext } = useAuth();
+  const logoutUser = async () => {
+    logoutContext()
+    dispatch(await logout())
+
+    navigation.navigate('Home', { screen: `login` });
+  }
   return (
     <View className="flex-1 bg-secondary pt-16 px-5">
 
@@ -45,7 +56,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = ({ navigation }) => 
 
       {/* Footer */}
       <View className="mt-auto mb-20 border-t border-gray-700 pt-5">
-        <TouchableOpacity onPress={logout}>
+        <TouchableOpacity onPress={logoutUser}>
           <Text className="text-primary-500 text-center text-[24px] text-base">Logout</Text>
         </TouchableOpacity>
       </View>

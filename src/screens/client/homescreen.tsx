@@ -2,9 +2,9 @@ import React from 'react';
 import { FlatList, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 
-import { useSearch } from '../context/searchContext';
-import { Product, RootStackParamList } from '../../types';
-import ProductCard from '../components/productCard';
+import { useSearch } from '../../context/searchContext';
+import { clientStackParamList, Product } from '../../../types';
+import ProductCard from '../../components/productCard';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 
@@ -75,7 +75,7 @@ const products: Product[] = [
 
 const LandingPage = () => {
     const { query } = useSearch();
-    type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+    type NavigationProp = NativeStackNavigationProp<clientStackParamList>;
     const navigation = useNavigation<NavigationProp>();
     const filtered = products.filter(p =>
         p.name.toLowerCase().includes(query.toLowerCase())
