@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 
 
 import { useSearch } from '../../context/searchContext';
@@ -7,85 +7,27 @@ import { clientStackParamList, Product } from '../../../types';
 import ProductCard from '../../components/productCard';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import { useGetproductsQuery } from '../../services/productApi.slice';
 
 
-const products: Product[] = [
-    {
-        id: '1',
-        name: 'iPhone 15',
-        images: ['https://via.placeholder.com/150', 'https://via.placeholder.com/150', 'https://via.placeholder.com/150'],
-        price: 999,
-        shopName: 'Gadget World',
-        town: 'Nairobi',
-        lat: -1.286389,
-        lng: 36.817223,
-    },
-    {
-        id: '2',
-        name: 'Galaxy S23',
-        images: ['https://via.placeholder.com/150', 'https://via.placeholder.com/150'],
-        price: 899,
-        shopName: 'Smart Tech',
-        town: 'Kitale',
-        lat: 1.01572000,
-        lng: 35.00622000,
-    },
-    {
-        id: '3',
-        name: 'iPhone 15',
-        images: ['https://via.placeholder.com/150', 'https://via.placeholder.com/150', 'https://via.placeholder.com/150'],
-        price: 999,
-        shopName: 'Gadget World',
-        town: 'Nairobi',
-        lat: -1.286389,
-        lng: 36.817223,
-    },
-    {
-        id: '4',
-        name: 'Galaxy S23',
-        images: ['https://via.placeholder.com/150', 'https://via.placeholder.com/150'],
-        price: 899,
-        shopName: 'Smart Tech',
-        town: 'Kitale',
-        lat: 1.01572000,
-        lng: 35.00622000,
-    },
-    {
-        id: '5',
-        name: 'iPhone 15',
-        images: ['https://via.placeholder.com/150', 'https://via.placeholder.com/150', 'https://via.placeholder.com/150'],
-        price: 999,
-        shopName: 'Gadget World',
-        town: 'Nairobi',
-        lat: -1.286389,
-        lng: 36.817223,
-    },
-    {
-        id: '6',
-        name: 'Galaxy S23',
-        images: ['https://via.placeholder.com/150', 'https://via.placeholder.com/150'],
-        price: 899,
-        shopName: 'Smart Tech',
-        town: 'Kitale',
-        lat: 1.01572000,
-        lng: 35.00622000,
-    },
-    // more...
-];
 
 const LandingPage = () => {
     const { query } = useSearch();
     type NavigationProp = NativeStackNavigationProp<clientStackParamList>;
     const navigation = useNavigation<NavigationProp>();
-    const filtered = products.filter(p =>
-        p.name.toLowerCase().includes(query.toLowerCase())
-    );
+    const { data, isLoading, refetch, isSuccess } = useGetproductsQuery({})
 
+    // const filtered = data === undefined ? [] : data.products.filter(p =>
+    //     p?.product_name?.toLowerCase().includes(query.toLowerCase())
+    // );
+
+
+    const screenHeight = Dimensions.get('window').height;
     return (
-        <View className='px-2 pt-14 bg-primary-50'>
+        <View style={{ minHeight: screenHeight }} className='px-2 pt-14 bg-secondary-200'>
             <FlatList
-                data={filtered}
-                keyExtractor={(item) => item.id}
+                data={data === undefined ? [] : data.products}
+                keyExtractor={(item) => item._id}
                 renderItem={({ item }) => (
                     <TouchableOpacity activeOpacity={1} onPress={() => navigation.navigate('Product_detail', { product: item })}>
                         <ProductCard product={item} />

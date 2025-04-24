@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { clientStackParamList } from "../../types";
 import ClientDashboard from "../screens/vendor/business/businessDeatilpage";
 import LandingPage from "../screens/client/homescreen";
+import SearchBar from "../components/searchBar";
 
 const Stack = createNativeStackNavigator<clientStackParamList>();
 
@@ -16,7 +17,10 @@ export function ClientStack() {
             }} >
             <Stack.Screen name="clientDashboard"
                 options={({ navigation }) => ({
-                    title: 'Dashboard',
+                    title: '',
+                    headerLeft: () => (
+                        <SearchBar title="products" />
+                    ),
                 })}
                 component={LandingPage} />
             {/* <Stack.Screen

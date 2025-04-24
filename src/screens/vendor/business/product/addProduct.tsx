@@ -102,7 +102,7 @@ const CreateProductModal = ({ route, business_id, dataItem, refetch, isModalVisi
         <Modal
             animationType="slide"
             transparent={false}
-            visible={isModalVisible}
+            visible={visible}
             onRequestClose={hideModal}
         >
 
