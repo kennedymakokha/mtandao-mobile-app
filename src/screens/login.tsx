@@ -159,7 +159,7 @@ export default function LoginScreen() {
     }
   };
   return (
-    <KeyboardAvoidingView className=" bg-secondary-500"
+    <KeyboardAvoidingView className=" bg-primary-600"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >

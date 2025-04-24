@@ -35,10 +35,10 @@ const RegisterLogin = ({ item, handleChange, handleLogin, setIslogin, hide, setH
             />}
             <Button title="login" submit={handleLogin} />
             <View className="flex flex-row  py-2 justify-center gap-x-4">
-                <Text className="text-primary-900">{islogin ? "Dont have an account yet" : "Have an account already"}</Text>
+                <Text className="text-black">{islogin ? "Dont have an account yet" : "Have an account already"}</Text>
                 <TouchableOpacity activeOpacity={1} onPress={() => setIslogin(!islogin)} >
                     <Text className="text-slate-100">
-                        {islogin ? "Register" : "Login"}
+                        {!islogin ? "Register" : "Login"}
                     </Text>
                 </TouchableOpacity>
             </View>

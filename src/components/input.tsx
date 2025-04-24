@@ -23,10 +23,10 @@ export const Input = ({ placeholder, value, onChangeText, keyboard, label, hide,
     return (
 
         <View className="flex w-full  h-20  mb-4 rounded-md bg-primary-100 justify-center">
-            {label && <Text className='px-2  tracking-widest pt-2 uppercase text-primary font-bold'>{label}</Text>}
+            {label && <Text className='px-2  tracking-widest pt-2 uppercase text-slate-800 font-bold'>{label}</Text>}
             <View className="flex flex-row  items-center justify-between px-4">
                 <TextInput
-                    className=" rounded-xl h-full text-primary"
+                    className=" rounded-xl h-full text-slate-500"
                     placeholder={placeholder}
                     placeholderTextColor="#999"
                     secureTextEntry={hide}
