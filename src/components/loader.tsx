@@ -20,21 +20,16 @@ const OverlayLoader = () => {
 
 export const FormLoader = () => {
     return (
-        <View className="absolute inset-0    justify-end  items-center z-50"
-            style={{
-                height: Dimensions.get('window').height,
-                width: Dimensions.get('window').width,
-            }}>
-            <View className="relative top-32 opacity-50 bg-black  h-full w-full  z-60" ></View>
-            <View className="relative bottom-20     z-100" >
+        <View className="absolute z-0 inset-0 h-screen  bg-primary-600  justify-end  items-center z-50" >
+            <View className="bg-black absolute z-10 opacity-40 w-full h-full justify-center items-center rounded-t-3xl"></View>
+            <View className=" z-20 absolute w-full h-full justify-center items-center rounded-t-3xl">
                 <Image
                     source={require('../assets/logo-1.png')}
                     className="w-20 animate-spin h-20 rounded-full mb-2"
                 />
-                <Text className='text-white text-lg text-lg'>Loading...</Text>
+                <Text className="text-secondary font-semibold">Loading...</Text>
+                {/* <ActivityIndicator size="large" color="#d4af37" /> */}
             </View>
-
-            {/* <ActivityIndicator size="large" color="#d4af37" /> */}
         </View>
     );
 };

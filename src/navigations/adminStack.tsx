@@ -4,11 +4,11 @@ import { AdminStackParamList } from "../../types";
 
 import { RootDrawer } from "./drawer";
 import BusinesScreen from "../screens/vendor/business";
-import ProductsList from "../screens/client";
+import ProductsList from "../screens/vendor/business/businessDeatilpage.tsx";
 import { truncate } from "../utils/trancate";
 import { TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import CreateBusiness from "../screens/vendor/business/createBusiness";
+import CreateBusiness from "../screens/vendor/business/createBusinessModal.tsx";
 import { DashboardScreen } from "../screens/admin";
 const Stack = createNativeStackNavigator<AdminStackParamList>();
 
@@ -20,16 +20,10 @@ export function AdminStack() {
             headerShadowVisible: false,
         }}>
             <Stack.Screen name="adminDrawer" options={{
-                
+
                 headerShown: false,
             }} component={DashboardScreen} />
-            <Stack.Screen name="Createbusiness"
-                options={({ route, navigation }: any) => {
-                    return {
-                        title: `${route.params ? `Edit ${truncate(route.params.item.name, 20)}` : "Add Business"}`
-                    }
-                }}
-                component={CreateBusiness} />
+
             <Stack.Screen name="Businesses"
                 options={({ navigation }) => ({
                     title: "",

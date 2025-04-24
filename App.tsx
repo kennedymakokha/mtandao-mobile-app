@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { MenuProvider } from 'react-native-popup-menu';
+import { ModalProvider } from './src/context/modalContext';
 
 
 
@@ -79,21 +80,23 @@ const App = () => {
   if (loading) return <SplashScreen />;
 
   return (
-    <MenuProvider>
-      <SearchProvider>
-        <NavigationContainer>
-          <AuthProvider>
-            <UserProvider>
-              <Provider store={store}>
-                <PersistGate loading={null} persistor={persistor}>
-                  <RootStack firstTime={firstTime} />
-                </PersistGate>
-              </Provider>
-            </UserProvider>
-          </AuthProvider>
-        </NavigationContainer>
-      </SearchProvider>
-    </MenuProvider>
+    <ModalProvider>
+      <MenuProvider>
+        <SearchProvider>
+          <NavigationContainer>
+            <AuthProvider>
+              <UserProvider>
+                <Provider store={store}>
+                  <PersistGate loading={null} persistor={persistor}>
+                    <RootStack firstTime={firstTime} />
+                  </PersistGate>
+                </Provider>
+              </UserProvider>
+            </AuthProvider>
+          </NavigationContainer>
+        </SearchProvider>
+      </MenuProvider>
+    </ModalProvider>
   );
 };
 

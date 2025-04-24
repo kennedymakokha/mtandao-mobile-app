@@ -1,16 +1,15 @@
-import React from 'react';
-import { View, FlatList, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import { View, FlatList, Dimensions, Modal, Pressable } from 'react-native';
 import { Business } from '../../../../types';
 import RenderItem from './renderItem';
+import { useDeletebusinessMutation, useGetbusinessesQuery } from '../../../services/businessApi.slice';
+import { useModal } from '../../../context/modalContext';
+import { Text } from 'react-native';
+import CreateBusiness from './createBusinessModal.tsx';
+import { FormLoader } from '../../../components/loader.tsx';
 
 
 
-const businessesData: Business[] = [
-    { id: '1', name: 'Green Leaf Café', category: 'Restaurant', status: true },
-    { id: '2', name: 'Urban Styles', category: 'Fashion Store', status: false },
-    { id: '3', name: 'TechHaven Solutions', category: 'IT Services', status: true },
-    { id: '4', name: 'Glow Spa & Wellness', category: 'Beauty' },
-];
 
 const cardSpacing = 16;
 const screenWidth = Dimensions.get('window').width;
@@ -18,30 +17,50 @@ const cardWidth = (screenWidth - cardSpacing * 3) / 2;
 
 const Businesses: React.FC = ({ navigation }: any) => {
 
+    const { data: businessesData, isLoading, refetch, isSuccess } = useGetbusinessesQuery({})
+    const [deleteBusiness, { isLoading: deleteLoading, error, isSuccess: deletesuccess }] = useDeletebusinessMutation({})
+
+    const { isModalVisible, showModal, toggleModal, hideModal } = useModal();
+    const [data, setData] = useState({});
+
+    const openModal = (data: Business) => {
+        setData(data)
+        showModal()
+    }
+    const handleDelete = async (id: string) => {
+        await deleteBusiness(id).unwrap()
+        await refetch()
+
+    }
 
     const renderItem = ({ item }: { item: Business }) => (
         <RenderItem
-            name={item.name}
-            description="A beautiful space for community events."
-            town="Springfield"
+            name={item.business_name}
+            description={item.description || ''}
+            // () => navigation.navigate('BusinessDetails', { id: item.id })
+            navigate={() => navigation.navigate('BusinessDetails', { id: item._id  })}
+            town={item.town || ''}
             status={item.status}
             category={item.category}
-            onEdit={() => console.log('Edit clicked')}
-            onDelete={() => console.log('Delete clicked')}
+            onEdit={() => openModal(item)}
+            onDelete={() => handleDelete(item._id)}
         />
     );
-
+    if (isLoading && !isSuccess) return (<FormLoader />)
+    if (deleteLoading && !deletesuccess) return (<FormLoader />)
     return (
         <View className="flex-1 bg-gray-100 pt-[100px]">
             <FlatList
-                data={businessesData}
+                data={businessesData === undefined ? [] : businessesData.businessess}
                 keyboardShouldPersistTaps="always"
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item._id}
                 renderItem={renderItem}
                 numColumns={1}
                 contentContainerStyle={{ paddingHorizontal: cardSpacing, paddingBottom: 20 }}
                 showsVerticalScrollIndicator={false}
             />
+            <CreateBusiness dataItem={data} refetch={refetch} showModal={showModal} hideModal={hideModal} isModalVisible={isModalVisible} navigation={navigation} />
+
 
         </View>
     );

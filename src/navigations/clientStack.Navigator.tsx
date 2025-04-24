@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { clientStackParamList } from "../../types";
-import ClientDashboard from "../screens/client";
+import ClientDashboard from "../screens/vendor/business/businessDeatilpage";
 import LandingPage from "../screens/client/homescreen";
 
 const Stack = createNativeStackNavigator<clientStackParamList>();

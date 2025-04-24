@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { authStackParamList, clientStackParamList } from "../../types";
-import ClientDashboard from "../screens/client";
+import ClientDashboard from "../screens/vendor/business/businessDeatilpage";
 import OnboardingScreen from "../screens/onBoardingScreen";
 import LoginScreen from "../screens/login";
 import { RootDrawer } from "./drawer";

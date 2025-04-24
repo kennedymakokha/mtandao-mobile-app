@@ -1,19 +1,15 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { vendorStackParamList } from "../../types";
-import { RootDrawer } from "./drawer";
-import { truncate } from "../utils/trancate";
-import CreateBusiness from "../screens/vendor/business/createBusiness";
 import VendorDashboard from "../screens/vendor";
 import Businesses from "../screens/vendor/business";
 import { TouchableOpacity } from "react-native";
 import SearchBar from "../components/searchBar";
+import { useModal } from "../context/modalContext";
 
 const Stack = createNativeStackNavigator<vendorStackParamList>();
-
-
-
 export function VendorStack() {
+    const { isModalVisible, showModal, toggleModal, hideModal } = useModal();
     return (
         <Stack.Navigator screenOptions={{
             headerTransparent: true,
@@ -22,23 +18,18 @@ export function VendorStack() {
             <Stack.Screen name="AdminDashboard" options={{
                 headerShown: false,
             }} component={VendorDashboard} />
-            <Stack.Screen name="Createbusiness"
-                options={({ route, navigation }: any) => {
-                    return {
-                        title: `${route.params ? `Edit ${truncate(route.params.item.name, 20)}` : "Add Business"}`
-                    }
-                }}
-                component={CreateBusiness} />
+
             <Stack.Screen name="Businesses"
 
                 options={({ navigation }) => ({
                     title: "",
                     headerRight: () => (
                         <TouchableOpacity
-                            onPress={() => navigation.navigate('Createbusiness')}
+                            onPress={showModal}
+                            // onPress={() => navigation.navigate('Createbusiness')}
                             style={{ marginRight: 12 }}
                         >
-                            <Icon name="plus" size={18} color="#ffaa1d" />
+                            <Icon name={`${!isModalVisible ? "plus" : "window-close"}`} size={18} color="#ffaa1d" />
                         </TouchableOpacity>
                     ),
                     headerLeft: () => (
@@ -52,8 +43,8 @@ export function VendorStack() {
                         title: route.params.item.name
                     }
                 }}
-                component={BusinesScreen} />
-            <Stack.Screen name="ProductsList"
+                component={BusinesScreen} /> */}
+            {/*  <Stack.Screen name="ProductsList"
                 options={({ route, navigation }: any) => {
                     return {
                         title: `${truncate(route.params.item.name, 10)}'s Products`,

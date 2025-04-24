@@ -13,8 +13,10 @@ type RenderItemProps = {
     status: boolean,
     category: string
     avatarUrl?: string;
+    navigate: () => void;
     onEdit: () => void;
     onDelete: () => void;
+
 };
 
 const RenderItem: React.FC<RenderItemProps> = ({
@@ -22,6 +24,7 @@ const RenderItem: React.FC<RenderItemProps> = ({
     description,
     town,
     category,
+    navigate,
     status,
     avatarUrl,
     onEdit,
@@ -31,7 +34,8 @@ const RenderItem: React.FC<RenderItemProps> = ({
         <View className="bg-white  rounded-2xl shadow p-4 mb-4 flex-row items-start justify-between">
             {/* Left Section - Avatar + Content */}
 
-            <TouchableOpacity onPress={() => Alert.alert("Tested")} className="flex-1">
+            <TouchableOpacity onPress={navigate}
+                className="flex-1">
                 <Text className="text-lg font-bold text-primary">{name}</Text>
                 <Text className="text-sm text-gray-600 mt-1">{description}</Text>
                 <View className='flex-row justify-between'>

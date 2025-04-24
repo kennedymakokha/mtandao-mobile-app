@@ -58,14 +58,14 @@ export type Product = {
 };
 
 export type Business = {
-    id?: any
-    name: string;
-    desc?: string
+    _id?: any
+    business_name: string;
+    description?: string
     town?: any
     category: string;
     lat?: any
     lng?: any
-    status?: boolean|any;
+    status?: boolean | any;
 };
 
 export type User = {
