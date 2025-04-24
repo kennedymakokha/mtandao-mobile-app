@@ -8,16 +8,15 @@ import { FlatList } from 'react-native'
 import { launchImageLibrary } from 'react-native-image-picker'
 import ImagePreview from './imagePreview'
 
-const CameraModal = ({ visible, setVisible }: any) => {
+const CameraModal = ({ visible, setVisible, images, setImages }: any) => {
     const [cam, setCam] = useState<any>("back")
-    const [images, setImages] = useState<any>([])
     const { hasPermission, requestPermission } = useCameraPermission()
     const device = useCameraDevice(cam)
     const camera = useRef<Camera>(null)
     useEffect(() => {
         (async () => {
             let status = await Camera.getCameraPermissionStatus();
-           
+
             if (status !== 'granted') {
                 status = await Camera.requestCameraPermission();
             }
@@ -108,6 +107,18 @@ const CameraModal = ({ visible, setVisible }: any) => {
                         </TouchableOpacity>
                     </View>
                     <View className=' absolute  inset-0 bg-black opacity-50   flex flex-row w-full h-full '></View>
+                    {images.length > 0 && <View className=' absolute z-10 top-[7%]  px-10  items-center justify-start px-1  flex flex-row w-full gap-x-2 px-0 '>
+                        {/* <Icon name="check" className='pr-1 text-secondary-500 ' size={56} color="#FFD700" /> */}
+                        <View className="flex items-center justify-center rounded-full border border-secondary size-10">
+                            <Text className='text-secondary font-bold text-xl'>{images.length}</Text>
+                        </View>
+                    </View>}
+                    {images.length > 0 && <View className=' absolute z-10 top-[40%]  px-10  items-center justify-center px-1  flex flex-row w-full gap-x-2 px-0 '>
+                        {/* <Icon name="check" className='pr-1 text-secondary-500 ' size={56} color="#FFD700" /> */}
+                        <TouchableOpacity onPress={() => setVisible(false)} className="flex items-center justify-center rounded-full h-20  border border-secondary-50 p-4">
+                            <Text className='text-slate-300 font-bold text-xl'>Done</Text>
+                        </TouchableOpacity>
+                    </View>}
                     <View className=' absolute z-10 bottom-4 px-1  flex flex-row w-full gap-x-2 px-0 '>
                         <FlatList
                             data={[...images].reverse()}

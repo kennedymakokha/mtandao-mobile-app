@@ -32,7 +32,7 @@ interface CreateBusinessProps {
     dataItem: any
 }
 const CreateBusiness = ({ route, dataItem, refetch, isModalVisible, hideModal, showModal }: CreateBusinessProps) => {
-    console.log(dataItem)
+  
     const [useCurrentLocation, setUseCurrentLocation] = useState(true);
     const { data } = useGetcategoriesQuery({})
     const [updateBusines, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate, error: updateErr }] = useUpdatebusinessMutation({})

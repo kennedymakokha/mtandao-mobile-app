@@ -11,7 +11,7 @@ type RenderItemProps = {
     description: string;
     town: string;
     status: boolean,
-    category: string
+    category: any
     avatarUrl?: string;
     navigate: () => void;
     onEdit: () => void;
@@ -49,7 +49,7 @@ const RenderItem: React.FC<RenderItemProps> = ({
                     </View>
                     <View className="flex-row items-center mt-2">
                         <Feather name="map-pin" size={14} color="gray" />
-                        <Text className="text-sm text-gray-500 ml-1">{category}</Text>
+                        <Text className="text-sm text-gray-500 ml-1">{category?.category_name}</Text>
                     </View>
                 </View>
             </TouchableOpacity>

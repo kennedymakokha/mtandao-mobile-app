@@ -4,7 +4,7 @@ import { TextInput } from 'react-native'
 import Icon from 'react-native-vector-icons/Entypo'
 const InputContainer = ({ value, keyboardType, latlng, onchange, editable, multiline, placeholder }: { latlng?: string, keyboardType?: string | any, editable?: boolean, multiline?: boolean, value: string, onchange: any, placeholder: string }) => {
     return (
-        <View className={`flex w-full  h-20  mb-4 rounded-lg bg-primary-50  ${latlng === "yes" && !editable && "bg-slate-300"} justify-center`}>
+        <View className={`flex w-full  h-20  mb-4 rounded-lg bg-[#A1C09C]  ${latlng === "yes" && !editable && "bg-slate-300"} justify-center`}>
             <TextInput
 
                 className={` px-4 py-3 text-lg font-bold text-base rounded-lg `}

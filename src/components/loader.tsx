@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ActivityIndicator, Dimensions, Image, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const OverlayLoader = () => {
     return (
         <View
@@ -20,9 +21,10 @@ const OverlayLoader = () => {
 
 export const FormLoader = () => {
     return (
-        <View className="absolute z-0 inset-0 h-screen  bg-primary-600  justify-end  items-center z-50" >
-            <View className="bg-black absolute z-10 opacity-40 w-full h-full justify-center items-center rounded-t-3xl"></View>
-            <View className=" z-20 absolute w-full h-full justify-center items-center rounded-t-3xl">
+        <View
+            style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width }}
+            className="flex-1 items-center justify-center bg-primary-100">
+            <View className="flex items-center  jstify-center">
                 <Image
                     source={require('../assets/logo-1.png')}
                     className="w-20 animate-spin h-20 rounded-full mb-2"
@@ -33,6 +35,18 @@ export const FormLoader = () => {
         </View>
     );
 };
+export const NoData = ({ title }: any) => {
+    return (
+        <View className="flex-1 items-center h-screen justify-center bg-primary-100">
+            <View className="flex items-center  jstify-center">
+                <Icon name="database-plus-outline" size={200} color="#d4af37" className="animate-bounce" />
+                <Text className="text-black uppercase text-center font-semibold">{`${title ? title : "No data"}...`}</Text>
+            </View>
+        </View>
+
+    );
+};
+
 
 
 export default OverlayLoader;

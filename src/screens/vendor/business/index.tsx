@@ -38,7 +38,7 @@ const Businesses: React.FC = ({ navigation }: any) => {
             name={item.business_name}
             description={item.description || ''}
             // () => navigation.navigate('BusinessDetails', { id: item.id })
-            navigate={() => navigation.navigate('BusinessDetails', { id: item._id  })}
+            navigate={() => navigation.navigate('BusinessDetails', { business: item })}
             town={item.town || ''}
             status={item.status}
             category={item.category}
@@ -49,7 +49,7 @@ const Businesses: React.FC = ({ navigation }: any) => {
     if (isLoading && !isSuccess) return (<FormLoader />)
     if (deleteLoading && !deletesuccess) return (<FormLoader />)
     return (
-        <View className="flex-1 bg-gray-100 pt-[100px]">
+        <View className="flex-1 bg-primary-50 pt-16">
             <FlatList
                 data={businessesData === undefined ? [] : businessesData.businessess}
                 keyboardShouldPersistTaps="always"

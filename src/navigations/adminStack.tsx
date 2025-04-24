@@ -37,7 +37,7 @@ export function AdminStack() {
                     ),
                 })}
                 component={BusinesScreen} />
-            <Stack.Screen name="BusinessesDetails"
+            <Stack.Screen name="BusinessDetails"
                 options={({ route }: any) => {
                     return {
                         title: route.params.item.name

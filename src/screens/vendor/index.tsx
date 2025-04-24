@@ -15,14 +15,14 @@ const VendorDashboard: React.FC<Props> = ({ navigation }) => {
   const totalProducts = 42;
 
   return (
-    <ScrollView className={`flex-1 pt-[100px] bg-white px-5  bg-gray-100`}>
+    <ScrollView className={`flex-1 pt-14 bg-primary-100 px-5 `}>
 
       {/* Dashboard Cards */}
-      <View className="flex-row justify-between mb-4">
+      <View className="flex-row  justify-between mb-4">
 
         <TouchableOpacity
           activeOpacity={1}
-          className="bg-primary-100 rounded-2xl p-5 w-[48%]"
+          className="bg-white rounded-2xl p-5 w-[48%]"
           onPress={() => navigation.navigate('Businesses')}
         >
           <Icon name="business-outline" size={28} color="#3B82F6" />

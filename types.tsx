@@ -27,7 +27,7 @@ export type vendorStackParamList = {
     AdminDashboard: undefined;
     Createbusiness: undefined;
     Businesses: undefined
-    BusinessesDetails: {
+    BusinessDetails: {
         product: Product;
     } | undefined | any;
 };
@@ -37,23 +37,22 @@ export type AdminStackParamList = {
     Businesses: undefined
     Createbusiness: undefined
     ProductsList: undefined
-    BusinessesDetails: {
+    BusinessDetails: {
         business: Business;
     } | undefined | any;
 
 };
 
 export type Product = {
-    town: string;
+    business: string;
     id: string;
-    name: string;
+    product_name: string;
     price: number;
     images?: string[] | any;
-    shopName?: string;
-    location?: string;
+
+
     description?: string;
-    lat?: any | number,
-    lng?: any | number
+
 
 };
 

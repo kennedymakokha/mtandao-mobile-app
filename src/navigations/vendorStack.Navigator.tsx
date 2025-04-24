@@ -6,6 +6,7 @@ import Businesses from "../screens/vendor/business";
 import { TouchableOpacity } from "react-native";
 import SearchBar from "../components/searchBar";
 import { useModal } from "../context/modalContext";
+import BusinessDetails from "../screens/vendor/business/businessDeatilpage";
 
 const Stack = createNativeStackNavigator<vendorStackParamList>();
 export function VendorStack() {
@@ -37,13 +38,13 @@ export function VendorStack() {
                     ),
                 })}
                 component={Businesses} />
-            {/* <Stack.Screen name="BusinessesDetails"
+            <Stack.Screen name="BusinessDetails"
                 options={({ route }: any) => {
                     return {
-                        title: route.params.item.name
+                        title: route.params.business.business_name
                     }
                 }}
-                component={BusinesScreen} /> */}
+                component={BusinessDetails} />
             {/*  <Stack.Screen name="ProductsList"
                 options={({ route, navigation }: any) => {
                     return {
