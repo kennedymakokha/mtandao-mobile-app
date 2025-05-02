@@ -11,6 +11,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { clientStackParamList } from '../../../types';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
+import { getDurationFromNow } from '../../components/formatDate';
+import Header from './components/header';
+import { SafeAreaView } from 'react-native';
 
 
 // Replace with an actual API key for testing
@@ -24,7 +27,7 @@ export default function BusinessDetails({ route }: any) {
     const navigation = useNavigation<NavigationProp>();
     const [routeCoords, setRouteCoords] = useState([]);
     const [userLocation, setUserLocation] = useState<any>(null);
-    console.log(userLocation)
+    console.log(business)
     const businessLocation =
         business?.location?.lat && business?.location?.lng
             ? {
@@ -46,12 +49,30 @@ export default function BusinessDetails({ route }: any) {
                 }
             }
 
+            // Geolocation.getCurrentPosition(
+            //     (pos) => {
+            //         setUserLocation(pos.coords);
+            //     },
+            //     (error) => console.error(error.message),
+            //     { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+            // );
+
+
             Geolocation.getCurrentPosition(
-                (pos) => {
-                    setUserLocation(pos.coords);
+                (pos) => setUserLocation(pos.coords),
+                (err) => {
+                    if (err.code === 3) {
+                        // Timeout — retry with low accuracy
+                        Geolocation.getCurrentPosition(
+                            (pos) => setUserLocation(pos.coords),
+                            (e) => console.warn('Retry failed', e),
+                            { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
+                        );
+                    } else {
+                        console.warn('Location error:', err.message);
+                    }
                 },
-                (error) => console.error(error.message),
-                { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+                { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 }
             );
         };
 
@@ -92,7 +113,7 @@ export default function BusinessDetails({ route }: any) {
         >
             <View style={{ flex: 1 }}>
                 {/* Image takes 30% of height */}
-                <View style={{ flex: 0.6 }} className="w-full rounded-t-2xl overflow-hidden bg-primary-100 dark:bg-zinc-800">
+                <View style={{ flex: 0.7 }} className="w-full rounded-t-2xl overflow-hidden bg-primary-100 dark:bg-zinc-800">
                     {item.images[0] ? (
                         <Image
                             source={{ uri: item.images[0] }}
@@ -107,9 +128,8 @@ export default function BusinessDetails({ route }: any) {
                 </View>
 
                 {/* Text content takes 70% */}
-                <View style={{ flex: 0.5 }} className="p-3">
+                <View style={{ flex: 0.3 }} className="p-3">
                     <Text className="text-lg font-semibold text-zinc-900 dark:text-white">{item.product_name}</Text>
-                    <Text className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">Town: {item.town}</Text>
                     <Text className="text-xl font-bold text-orange-500 mt-2">
                         Ksh {parseFloat(item.price).toFixed(2)}
                     </Text>
@@ -127,43 +147,73 @@ export default function BusinessDetails({ route }: any) {
             {/* <View className="h-3 w-24 rounded animate-pulse bg-gray-700" ></View> */}
         </View>
     );
+
+
+    const businessDetails = [
+        {
+            title: business.town,
+            icon: "location-city",
+
+        },
+        {
+            title: business.description,
+            icon: "details",
+
+        },
+        {
+            title: getDurationFromNow(business.createdAt),
+            icon: "date-range",
+        }
+    ]
     return (
         <View className="flex-1 bg-primary-800 pt-14" style={{ width: width }}>
-
-            <Text className='text-white tracking-widest font-bold text-center py-2'>Business Location</Text>
-            <View className="h-64 mb-4 mx-4 overflow-hidden relative rounded-2xl shadow">
-                {businessLocation && userLocation ? (
-                    <MapView
-                        style={{ flex: 1 }}
-                        initialRegion={{
-                            latitude: businessLocation.latitude,
-                            longitude: businessLocation.longitude,
-                            latitudeDelta: 0.02,
-                            longitudeDelta: 0.02,
-                        }}
-                    >
-                        {userLocation && <Marker coordinate={userLocation} title="You" />}
-                        <Marker coordinate={businessLocation} title="Business" />
-                        {routeCoords.length > 0 && (
-                            <Polyline coordinates={routeCoords} strokeWidth={4} strokeColor="#3b82f6" />
-                        )}
-                    </MapView>
-                ) : (
-                    <View className="items-center justify-center h-full">
-                        {!userLocation && <View className="animate-ping">
+            <SafeAreaView className="flex-1 " style={{ minHeight: 0.35 * height }} >
+                <ScrollView>
+                    <View className="my-4 mx-4 border rounded-md border-primary-600 p-2 gap-2">
+                        <Header text="Business Details" />
+                        {businessDetails.map((buz, i) => (
+                            <View key={buz.title} className={`flex ${i == businessDetails.length - 1 && "self-end"} flex-row gap-x-2 py-2 `}>
+                                <Icon className='text-primary-300' size={20} name={buz.icon} color="#ffae2e" />
+                                <Text className="text-white">{buz.title}</Text>
+                            </View>
+                        ))}
+                    </View>
+                    <Header text="Business Location" secondary />
+                    <View className="h-64 mb-4 mx-4 overflow-hidden relative rounded-2xl shadow">
+                        {businessLocation ? (
+                            <MapView
+                                style={{ flex: 1 }}
+                                initialRegion={{
+                                    latitude: businessLocation.latitude,
+                                    longitude: businessLocation.longitude,
+                                    latitudeDelta: 0.02,
+                                    longitudeDelta: 0.02,
+                                }}
+                            >
+                                {userLocation && <Marker coordinate={userLocation} title="You" />}
+                                <Marker coordinate={businessLocation} title="Business" />
+                                {routeCoords.length > 0 && (
+                                    <Polyline coordinates={routeCoords} strokeWidth={4} strokeColor="#3b82f6" />
+                                )}
+                            </MapView>
+                        ) : (
+                            <View className="items-center justify-center h-full">
+                                {/* {!userLocation && <View className="animate-ping">
                             <Icon className='text-primary-300 animate-ping ' size={40} name="location-off" color="red" />
-                        </View>}
-                        <Text className='text-center font-bold text-white text-xl'>{!userLocation ? "Turn on Your Phone GPRS for better experience " : "No Details for Business Location"}</Text>
+                        </View>} */}
+                                <Text className='text-center font-bold text-white text-xl'> No Details for Business Location</Text>
+                            </View>
+                        )}
+                        {business?.location?.lat === undefined && business?.location?.lng === undefined && (
+                            <View className="absolute inset-0 bg-black/40 items-center justify-center">
+                                <Text className="text-white text-lg font-semibold">Business location not provided</Text>
+                            </View>
+                        )}
                     </View>
-                )}
-                {business?.location?.lat === undefined && business?.location?.lng === undefined && (
-                    <View className="absolute inset-0 bg-black/40 items-center justify-center">
-                        <Text className="text-white text-lg font-semibold">Business location not provided</Text>
-                    </View>
-                )}
-            </View>
+                </ScrollView>
+            </SafeAreaView>
             <View className="flex w-full h-full  px-5">
-                <Text className='text-secondary uppercase tracking-widest font-bold text-center py-2'>Products</Text>
+                <Header text="products" />
 
                 <FlatList
                     data={data === undefined && !isSuccess && isLoading ? [...Array(10)] : data?.products}

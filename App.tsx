@@ -14,6 +14,7 @@ import { persistor, store } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { MenuProvider } from 'react-native-popup-menu';
 import { ModalProvider } from './src/context/modalContext';
+import { StatusBar } from 'react-native';
 
 
 
@@ -81,6 +82,11 @@ const App = () => {
 
   return (
     <ModalProvider>
+      <StatusBar
+        animated={true}
+        backgroundColor="#007A5E"
+
+      />
       <MenuProvider>
         <SearchProvider>
           <NavigationContainer>

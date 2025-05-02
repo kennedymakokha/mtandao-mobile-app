@@ -11,7 +11,7 @@ export const injectEndpoints = api.injectEndpoints({
       }),
     }),
     getbusinesses: builder.query({
-      query: () => ({ url: `${baseUrl}` }),
+      query: (data) => ({ url: `${baseUrl}?limit=${data.limit}&page=${data.page}` }),
     }),
     updatebusiness: builder.mutation({
       query: (body) => ({
