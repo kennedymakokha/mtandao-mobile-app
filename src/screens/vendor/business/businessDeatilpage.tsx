@@ -47,9 +47,11 @@ const BusinessDetails: React.FC = ({ route }: any) => {
   const [show, setShow] = useState(false)
   // const { isModalVisible, showModal, toggleModal, hideModal } = useModal();
   return (
-    <View className="flex-1 bg-primary-100 pt-16">
+    <View className="flex-1 bg-primary-200 pt-16">
       {isLoading && !isSuccess && data === undefined && <FormLoader />}
-      {data?.products?.length === 0 && <Text>{`Add a product under ${business.business_name}`}</Text>}
+      {/* {data?.products?.length === 0 && <View className='flex-1 justify-center items-center'>
+        <Text className='font-bold'>{`Add a product under ${business.business_name}`}</Text>
+      </View>} */}
       <FlatList
         data={data === undefined ? [] : data.products}
         keyExtractor={(item) => item.id}

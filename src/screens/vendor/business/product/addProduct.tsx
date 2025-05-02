@@ -15,7 +15,7 @@ import {
 import Geolocation from '@react-native-community/geolocation';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import { Product } from '../../../../../types';
-import InputContainer from '../../../../components/input';
+import InputContainer, { TextArea } from '../../../../components/input';
 import Button from '../../../../components/button';
 import CameraModal from '../../../../components/cameraModal';
 import { Modal } from 'react-native';
@@ -102,27 +102,25 @@ const CreateProductModal = ({ route, business_id, dataItem, refetch, isModalVisi
         <Modal
             animationType="slide"
             transparent={false}
-            visible={visible}
+            visible={isModalVisible}
             onRequestClose={hideModal}
         >
 
             <KeyboardAvoidingView
-                className="flex-1 bg-primary-100 pt-14 "
+                className="flex-1 bg-primary-200 pt-14 "
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
             >
                 {isLoading && !isSuccess && <FormLoader />}
-                <Text className="text-2xl text-center font-bold mb-4">Admin Dashboard</Text>
+                <Text className="text-2xl text-center text-primary font-bold mb-4">Add Product</Text>
                 {msg.msg && <Toast msg={msg.msg} state={msg.state} />}
                 <ScrollView className="px-4 pt-6">
                     <InputContainer value={product_name} onchange={(e: any) => handleChange("product_name", e)} placeholder="Product Name" />
                     <InputContainer keyboardType="numeric" value={price} onchange={(e: any) => handleChange("price", e)} placeholder="Product price" />
-                    <TextInput
-                        className="border border-primary rounded-xl px-4 py-3 mb-6 text-base h-28"
-                        placeholder="Description"
-                        multiline
-                        textAlignVertical="top"
+                   
+                    <TextArea
                         value={description}
+                        placeholder='Description'
                         onChangeText={(e: any) => handleChange("description", e)}
                     />
                     <TouchableOpacity activeOpacity={1} onPress={() => setVisible(true)} className={`border border-gray-300 flex items-center justify-center rounded-xl px-4 py-3 mb-4 text-base `}>

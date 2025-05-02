@@ -18,7 +18,7 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = ({ navigation }) => 
     navigation.navigate('Home', { screen: `login` });
   }
   return (
-    <View className="flex-1 bg-secondary pt-16 px-5">
+    <View className="flex-1 bg-primary-600 pt-16 px-5">
 
       {/* Header */}
       <View className="items-center mb-10 border-b">

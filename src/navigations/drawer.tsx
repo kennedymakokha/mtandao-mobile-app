@@ -14,7 +14,7 @@ const Drawer = createDrawerNavigator();
 export function RootDrawer() {
     const { user } = useSelector((state: any) => state.auth)
     const { token } = useAuth();
-    console.log(user, "USER")
+   
     const getMainStack = () => {
         if (!token) return LoginScreen; // or null
         if (user?.role === 'client') return ClientStack;

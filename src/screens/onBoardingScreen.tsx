@@ -88,7 +88,7 @@ const OnboardingScreen = () => {
         className="w-1/2 h-1/2 mb-6"
         resizeMode="contain"
       />
-      <Text className="text-3xl font-bold text-center text-secondary-200">{item.title}</Text>
+      <Text className="text-3xl font-bold text-center text-secondary">{item.title}</Text>
       <Text className="text-lg text-center mt-4 text-slate-200">{item.description}</Text>
     </View>
   );
@@ -97,7 +97,7 @@ const OnboardingScreen = () => {
     
   }, []);
   return (
-    <View className="flex-1 bg-primary-600">
+    <View className="flex-1 bg-primary-800">
       <Animated.FlatList
         ref={flatListRef}
         data={slides}

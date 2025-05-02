@@ -11,7 +11,7 @@ import {
     KeyboardAvoidingView,
     Platform,
 } from 'react-native';
-import InputContainer from '../../../components/input';
+import InputContainer, { TextArea } from '../../../components/input';
 import { Business, Product } from '../../../../types';
 import Button from '../../../components/button';
 import SelectInput from '../../../components/selectInput';
@@ -32,7 +32,7 @@ interface CreateBusinessProps {
     dataItem: any
 }
 const CreateBusiness = ({ route, dataItem, refetch, isModalVisible, hideModal, showModal }: CreateBusinessProps) => {
-  
+
     const [useCurrentLocation, setUseCurrentLocation] = useState(true);
     const { data } = useGetcategoriesQuery({})
     const [updateBusines, { isLoading: isLoadingUpdate, isSuccess: isSuccessUpdate, error: updateErr }] = useUpdatebusinessMutation({})
@@ -130,6 +130,17 @@ const CreateBusiness = ({ route, dataItem, refetch, isModalVisible, hideModal, s
             })
         }
     }, [dataItem])
+    const fetchCoordinatedFromPlaceId = async (placeId: string) => {
+        try {
+            const response = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=AIzaSyBBYlYdpbci4zBhCSyLAJngOBLR3cRCGJA`);
+            const data = await response.json();
+            const location = data.result.geometry.location;
+            console.log(location);
+            // Do something with the location coordinates (latitude and longitude)
+        } catch (error) {
+            console.error('Error fetching coordinates:', error);
+        }
+    };
     if (isLoading && !isSuccess) return (<FormLoader />)
     if (isLoadingUpdate && !isSuccessUpdate) return (<FormLoader />)
     return (
@@ -140,7 +151,7 @@ const CreateBusiness = ({ route, dataItem, refetch, isModalVisible, hideModal, s
             onRequestClose={hideModal}
         >
             <KeyboardAvoidingView
-                className="flex-1 bg-white pt-14"
+                className="flex-1 bg-primary-200 pt-14"
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
             >
@@ -161,6 +172,12 @@ const CreateBusiness = ({ route, dataItem, refetch, isModalVisible, hideModal, s
                         <Text className="text-center text-green-600 font-medium">
                             {useCurrentLocation ? 'Switch to Manual Location' : 'Use My Current Location'}
                         </Text>
+                        {/* <PlacesAutocomplete
+                                        apiKey='AIzaSyBBYlYdpbci4zBhCSyLAJngOBLR3cRCGJA'
+                                        onPlaceSelected={(placeId, description) => {
+                                            fetchCoordinatedFromPlaceId(placeId); // same as before
+                                        }}
+                                    /> */}
                     </TouchableOpacity>
                     <InputContainer editable={!useCurrentLocation} keyboardType="decimal-pad" value={lat} latlng="yes" onchange={(e: any) => handleChange("lat", e)} multiline={true} placeholder="latitude" />
                     <InputContainer editable={!useCurrentLocation} keyboardType="decimal-pad" value={lng} latlng="yes" onchange={(e: any) => handleChange("lng", e)} multiline={true} placeholder="longitude" />
@@ -174,20 +191,15 @@ const CreateBusiness = ({ route, dataItem, refetch, isModalVisible, hideModal, s
                             { label: 'Agriculture', value: 'Agriculture' },
                             { label: 'Stationaries', value: 'Stationaries' },
                         ]}
-
                     />
-                    <TextInput
-                        className="border border-primary rounded-xl px-4 py-3 mb-6 text-base h-28"
-                        placeholder="Description"
-                        multiline
-                        textAlignVertical="top"
+                    <TextArea
                         value={description}
+                        placeholder='Description'
                         onChangeText={(e: any) => handleChange("description", e)}
                     />
 
-
                     <Button title={route?.params !== undefined ? "update" : "Submit"} submit={item._id ? handleUpdate : handleSubmit} />
-                    <Button title="cancel" submit={hideModal} />
+                    {/* <Button title="cancel" submit={hideModal} /> */}
 
                 </ScrollView>
 

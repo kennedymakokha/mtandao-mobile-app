@@ -38,8 +38,8 @@ export default function LoginScreen() {
   const [step, setStep] = useState(1);
   const { login, token } = useAuth();
   const [item, setItem] = useState<Item>({
-    phone_number: "0716017221",
-    password: "makokha1",
+    phone_number: "0706203245",
+    password: "MikeMike",
     confirm_password: "",
     username: "suggeted",
     code: ""
@@ -159,7 +159,7 @@ export default function LoginScreen() {
     }
   };
   return (
-    <KeyboardAvoidingView className=" bg-primary-600"
+    <KeyboardAvoidingView className=" bg-primary-800"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >

@@ -10,6 +10,9 @@ import { useNavigation } from '@react-navigation/native';
 import { useGetproductsQuery } from '../../services/productApi.slice';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import PlacesAutocomplete from '../../components/PlacesAutocomplete';
+import { TextArea } from '../../components/input';
+import { Image } from 'react-native';
+import { Text } from 'react-native';
 
 
 
@@ -23,28 +26,10 @@ const LandingPage = () => {
     //     p?.product_name?.toLowerCase().includes(query.toLowerCase())
     // );
 
-    const fetchCoordinatedFromPlaceId = async (placeId: string) => {
-        try {
-            const response = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=AIzaSyBBYlYdpbci4zBhCSyLAJngOBLR3cRCGJA`);
-            const data = await response.json();
-            const location = data.result.geometry.location;
-            console.log(location);
-            // Do something with the location coordinates (latitude and longitude)
-        } catch (error) {
-            console.error('Error fetching coordinates:', error);
-        }
-    };
+
     const screenHeight = Dimensions.get('window').height;
     return (
-        <View style={{ minHeight: screenHeight }} className='px-2 pt-14 bg-primary-200'>
-
-            {/* <PlacesAutocomplete
-                apiKey='AIzaSyBBYlYdpbci4zBhCSyLAJngOBLR3cRCGJA'
-                onPlaceSelected={(placeId, description) => {
-                    fetchCoordinatedFromPlaceId(placeId); // same as before
-                }}
-            /> */}
-
+        <View style={{ minHeight: screenHeight }} className='px-2 pt-14 bg-primary-300'>
             <FlatList
                 data={data === undefined ? [] : data.products}
                 keyExtractor={(item) => item._id}
@@ -56,6 +41,7 @@ const LandingPage = () => {
                 numColumns={2}
                 contentContainerStyle={{ padding: 1 }}
             />
+         
         </View>
     );
 };

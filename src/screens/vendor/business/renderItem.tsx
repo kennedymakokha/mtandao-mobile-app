@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import Feather from 'react-native-vector-icons/Feather';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 type RenderItemProps = {
@@ -43,12 +43,12 @@ const RenderItem: React.FC<RenderItemProps> = ({
                         <Feather name="map-pin" size={14} color="gray" />
                         <Text className="text-sm text-gray-500 ml-1">{town}</Text>
                     </View>
-                    <View className="flex-row items-center mt-2">
+                    {/* <View className="flex-row items-center mt-2">
                         <Feather name="map-pin" size={14} color="gray" />
                         <Text className={`text-sm ${status ? "text-red-500" : "text-green-500"} ml-1`}>{town}</Text>
-                    </View>
+                    </View> */}
                     <View className="flex-row items-center mt-2">
-                        <Feather name="map-pin" size={14} color="gray" />
+                        <Icon name="category" size={14} color="gray" />
                         <Text className="text-sm text-gray-500 ml-1">{category?.category_name}</Text>
                     </View>
                 </View>

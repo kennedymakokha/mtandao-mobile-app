@@ -21,10 +21,7 @@ const OverlayLoader = () => {
 
 export const FormLoader = () => {
     return (
-        <View
-            style={{ height: Dimensions.get('window').height, width: Dimensions.get('window').width }}
-            className="flex-1 items-center justify-center bg-primary-100">
-            <View className="flex items-center  jstify-center">
+            <View className="flex-1  items-center  justify-center">
                 <Image
                     source={require('../assets/logo-1.png')}
                     className="w-20 animate-spin h-20 rounded-full mb-2"
@@ -32,12 +29,12 @@ export const FormLoader = () => {
                 <Text className="text-secondary font-semibold">Loading...</Text>
                 {/* <ActivityIndicator size="large" color="#d4af37" /> */}
             </View>
-        </View>
+       
     );
 };
 export const NoData = ({ title }: any) => {
     return (
-        <View className="flex-1 items-center h-screen justify-center bg-primary-100">
+        <View className="flex-1 items-center h-screen justify-center">
             <View className="flex items-center  jstify-center">
                 <Icon name="database-plus-outline" size={200} color="#d4af37" className="animate-bounce" />
                 <Text className="text-black uppercase text-center font-semibold">{`${title ? title : "No data"}...`}</Text>

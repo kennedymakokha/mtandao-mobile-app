@@ -14,7 +14,6 @@ const ProductDetail: React.FC = ({ route, navigation }: any) => {
     const flatListRef = useRef<FlatList>(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const { width } = Dimensions.get('window');
-
     const locationOptions = Platform.select({
         android: {
             enableHighAccuracy: true,
@@ -112,15 +111,12 @@ const ProductDetail: React.FC = ({ route, navigation }: any) => {
     }, [userLocation]);
 
     return (
-        <View className="flex-1 bg-white px-4 pt-14">
-            <Image
-                // source={{ uri: product.image }}
-                source={require('../assets/sneaker1.webp')}
-                className="w-full h-48 rounded-xl" resizeMode="cover" />
-            {/* <View className="relative">
+        <View className="flex-1 bg-primary-200 px-4 pt-14">
+          
+            <View className="relative">
                 <FlatList
                     ref={flatListRef}
-                    data={['https://via.placeholder.com/150']}
+                    data={product.images}
                     keyExtractor={(item, index) => index.toString()}
                     horizontal
                     pagingEnabled
@@ -130,17 +126,17 @@ const ProductDetail: React.FC = ({ route, navigation }: any) => {
                         setActiveIndex(index);
                     }}
                     renderItem={({ item }) => (
-                        
-                        <Image source={{ uri: item }} style={{ width, height: 250 }}  resizeMode="cover" />
+
+                        <Image source={{ uri: item }} style={{ width, height: 250 }} resizeMode="cover" />
                     )}
                 />
-            
+
                 <View className="absolute top-2 right-4 bg-black bg-opacity-60 px-3 py-1 rounded-full">
                     <Text className="text-white text-sm font-medium">
                         {activeIndex + 1} / {product.images.length}
                     </Text>
                 </View>
-            </View> */}
+            </View>
 
             <Text className="mt-4 text-xl font-bold text-primary-800">{product.name}</Text>
             <Text className="text-lg text-secondary-600">Ksh {product.price}</Text>
@@ -149,7 +145,7 @@ const ProductDetail: React.FC = ({ route, navigation }: any) => {
             </Text>
 
             <Text className="mt-4 mb-2 text-base font-semibold text-gray-700">Location</Text>
-            {userLocation ? (
+            {/* {userLocation ? (
                 <MapView
                     style={{ width: '100%', height: 250, borderRadius: 12 }}
                     initialRegion={{
@@ -179,19 +175,19 @@ const ProductDetail: React.FC = ({ route, navigation }: any) => {
 
             ) : (
                 <View className="absolute inset-0 bottom-0  justify-end  items-center z-50"
-                          >
-                           <View className="relative bottom-0  opacity-50 bg-black  h-1/3 w-full  z-60" ></View>
-                           <View className="relative bottom-48 items-center flex    z-100" >
-                               <Image
-                                   source={require('../assets/logo-1.png')}
-                                   className="w-20 animate-spin h-20 rounded-full mb-2"
-                               />
-                               <Text className='text-white text-center text-lg text-lg'>Loading map...</Text>
-                           </View>
-               
-                          
-                       </View>
-            )}
+                >
+                    <View className="relative bottom-0  opacity-50 bg-black  h-1/3 w-full  z-60" ></View>
+                    <View className="relative bottom-48 items-center flex    z-100" >
+                        <Image
+                            source={require('../../assets/logo-1.png')}
+                            className="w-20 animate-spin h-20 rounded-full mb-2"
+                        />
+                        <Text className='text-white text-center text-lg text-lg'>Loading map...</Text>
+                    </View>
+
+
+                </View>
+            )} */}
 
         </View>
     );

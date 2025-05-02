@@ -60,7 +60,7 @@ export const useAuth = () => useContext(AuthContext);
         setToken(newToken);
         navigation.reset({
             index: 0,
-            routes: [{ name: 'Home' as never }],
+            routes: [{ name: 'Admindashboard' as never }],
         });
     };
 

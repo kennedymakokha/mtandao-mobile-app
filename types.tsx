@@ -18,9 +18,14 @@ export type authStackParamList = {
 };
 export type clientStackParamList = {
     clientDashboard: undefined;
+    clientMainArea: undefined
     Product_detail: {
         product: Product;
     } | undefined | any;
+    business_detail: {
+        business: Business;
+    } | undefined | any;
+
 
 };
 export type vendorStackParamList = {
@@ -44,7 +49,7 @@ export type AdminStackParamList = {
 };
 
 export type Product = {
-    business: string;
+    business: string | any;
     id: string;
     product_name: string;
     price: number;

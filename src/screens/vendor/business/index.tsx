@@ -7,6 +7,7 @@ import { useModal } from '../../../context/modalContext';
 import { Text } from 'react-native';
 import CreateBusiness from './createBusinessModal.tsx';
 import { FormLoader } from '../../../components/loader.tsx';
+import { FAB } from 'react-native-paper';
 
 
 
@@ -49,7 +50,7 @@ const Businesses: React.FC = ({ navigation }: any) => {
     if (isLoading && !isSuccess) return (<FormLoader />)
     if (deleteLoading && !deletesuccess) return (<FormLoader />)
     return (
-        <View className="flex-1 bg-primary-50 pt-16">
+        <View className="flex-1 bg-primary-200 pt-16">
             <FlatList
                 data={businessesData === undefined ? [] : businessesData.businessess}
                 keyboardShouldPersistTaps="always"
@@ -59,6 +60,13 @@ const Businesses: React.FC = ({ navigation }: any) => {
                 contentContainerStyle={{ paddingHorizontal: cardSpacing, paddingBottom: 20 }}
                 showsVerticalScrollIndicator={false}
             />
+
+             <FAB
+                    icon="plus"
+                    className="bg-secondary-500 text-white"
+                    style={{ position: 'absolute', bottom: 16, right: 16 }}
+                    onPress={() => showModal()}
+                  />
             <CreateBusiness dataItem={data} refetch={refetch} showModal={showModal} hideModal={hideModal} isModalVisible={isModalVisible} navigation={navigation} />
 
 
