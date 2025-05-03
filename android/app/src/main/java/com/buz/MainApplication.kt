@@ -1,4 +1,4 @@
-package com.mtandao
+package com.buz
 
 import android.app.Application
 import com.facebook.react.PackageList

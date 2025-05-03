@@ -2,9 +2,18 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import { AppRegistry } from 'react-native';
 import App from './App';
-import {name as appName} from './app.json';
-import './gesture-handler';
+import { name as appName } from './app.json';
+import { NavigationContainer } from '@react-navigation/native';
+import { AuthProvider } from './contexts/AuthContext1';
 
-AppRegistry.registerComponent(appName, () => App);
+const Root = () => (
+  <NavigationContainer>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </NavigationContainer>
+);
+
+AppRegistry.registerComponent(appName, () => Root);

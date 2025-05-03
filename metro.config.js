@@ -3,7 +3,6 @@ const { withNativeWind } = require("nativewind/metro");
 const {
   wrapWithReanimatedMetroConfig,
 } = require('react-native-reanimated/metro-config');
-
 const config = mergeConfig(getDefaultConfig(__dirname), {
   /* your config */
 });

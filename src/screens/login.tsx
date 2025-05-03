@@ -10,11 +10,12 @@ import RegisterLogin, { OtpView } from "./components/authComponets/registration"
 import OverlayLoader, { FormLoader } from "../components/loader";
 import Toast from "../components/toast";
 import { useUser } from "../context/UserContext"
-import { API_URL, SOME_SECRET } from '@env';
+import { API_URL } from '@env';
 import { useAuth } from "../context/AuthContext";
 import { useActivateMutation, useLoginMutation, useSignupMutation } from "../services/authApi.slice";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../features/auth.slice";
+import { useAuthContext } from "../../contexts/AuthContext1";
 
 export default function LoginScreen() {
 
@@ -36,7 +37,7 @@ export default function LoginScreen() {
   const [register, { isLoading: registrationLoading }] = useSignupMutation();
   const [activate, { isLoading: activationLoading }] = useActivateMutation();
   const [step, setStep] = useState(1);
-  const { login, token } = useAuth();
+  const { token, login } = useAuthContext();
   const [item, setItem] = useState<Item>({
     phone_number: "0706203245",
     password: "MikeMike",
@@ -78,7 +79,7 @@ export default function LoginScreen() {
 
       if (data.ok === true) {
         setMsg({ msg: `${islogin ? "Login successful! Redirecting..." : "Registration successful! Please verify your account."}`, state: "success" });
-        login(data.token);
+        await login(data.token);
         if (islogin) {
           dispatch(setCredentials({ ...data }))
           navigation.navigate("Home");

@@ -14,6 +14,7 @@ import { Image } from 'react-native';
 import { getDurationFromNow } from '../../components/formatDate';
 import Header from './components/header';
 import { SafeAreaView } from 'react-native';
+import ListEmpty from '../../components/listEmpty';
 
 
 // Replace with an actual API key for testing
@@ -227,6 +228,10 @@ export default function BusinessDetails({ route }: any) {
                         paddingTop: 8,
                         paddingBottom: 100,
                     }}
+                    ListEmptyComponent={() => (
+                        <ListEmpty text="products" />
+                    )}
+
                 />
 
             </View>

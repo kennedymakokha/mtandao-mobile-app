@@ -10,18 +10,34 @@ import { ClientStack } from './clientStack.Navigator';
 import { AdminStack } from './adminStack';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../context/AuthContext';
+import { useAuthContext } from '../../contexts/AuthContext1';
+import { useEffect, useMemo } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+// import { RootStackParamList } from '../../types';
 const Drawer = createDrawerNavigator();
 export function RootDrawer() {
     const { user } = useSelector((state: any) => state.auth)
-    const { token } = useAuth();
-   
-    const getMainStack = () => {
+    // const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+ 
+    const { token, logout } = useAuthContext(); // ✅ OK
+ 
+    const StackComponent = useMemo(() => {
+
         if (!token) return LoginScreen; // or null
         if (user?.role === 'client') return ClientStack;
         if (user?.role === 'superAdmin' || user?.role === 'sale') return AdminStack;
         if (user?.role === 'admin') return VendorStack;
         return LoginScreen;
-    };
+    }, [token, user]);
+
+    useEffect(() => {
+        // if (!user) {
+        //     navigation.replace("login");
+        // }
+    }, [token]);
+
+
 
     return (
         <Drawer.Navigator
@@ -47,7 +63,7 @@ export function RootDrawer() {
                 options={{
                     headerShown: false
                 }}
-                name="Admindashboard" component={getMainStack()} />
+                name="Admindashboard" component={StackComponent} />
             {/*<Drawer.Screen name="transactions" component={Transactions} /> */}
             {/* <Drawer.Screen name="Profile" component={ProfileScreen} /> */}
         </Drawer.Navigator>
