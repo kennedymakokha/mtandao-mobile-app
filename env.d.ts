@@ -1,4 +1,5 @@
 declare module '@env' {
     export const API_URL: string;
-    export const SOME_SECRET: string;
+    export const GOOGLE_MAPS_KEY: string;
   }
+  

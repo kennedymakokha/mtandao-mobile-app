@@ -89,8 +89,8 @@ const App = () => {
       />
       <MenuProvider>
         <SearchProvider>
-          <NavigationContainer>
-            <AuthProvider>
+          {/* <NavigationContainer> */}
+            {/* <AuthProvider> */}
               <UserProvider>
                 <Provider store={store}>
                   <PersistGate loading={null} persistor={persistor}>
@@ -98,8 +98,8 @@ const App = () => {
                   </PersistGate>
                 </Provider>
               </UserProvider>
-            </AuthProvider>
-          </NavigationContainer>
+            {/* </AuthProvider>
+          </NavigationContainer> */}
         </SearchProvider>
       </MenuProvider>
     </ModalProvider>

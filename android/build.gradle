@@ -14,17 +14,11 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle")
         classpath("com.facebook.react:react-native-gradle-plugin")
+        
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+       classpath('com.android.tools.build:gradle:8.3.2') // ✅ (Or whatever React Native needs)
+        classpath('com.google.gms:google-services:4.4.0') // ✅ Add 
     }
-    allprojects {
-    tasks.withType(JavaCompile).configureEach {
-        options.compilerArgs += [
-            "-Xlint:-unchecked",
-            "-Xlint:-deprecation"
-        ]
-    }
-}
-
 }
 
 apply plugin: "com.facebook.react.rootproject"

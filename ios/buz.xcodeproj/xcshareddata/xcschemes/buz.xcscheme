@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "mtandao.app"
-               BlueprintName = "mtandao"
-               ReferencedContainer = "container:mtandao.xcodeproj">
+               BuildableName = "buz.app"
+               BlueprintName = "buz"
+               ReferencedContainer = "container:buz.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "mtandaoTests.xctest"
-               BlueprintName = "mtandaoTests"
-               ReferencedContainer = "container:mtandao.xcodeproj">
+               BuildableName = "buzTests.xctest"
+               BlueprintName = "buzTests"
+               ReferencedContainer = "container:buz.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "mtandao.app"
-            BlueprintName = "mtandao"
-            ReferencedContainer = "container:mtandao.xcodeproj">
+            BuildableName = "buz.app"
+            BlueprintName = "buz"
+            ReferencedContainer = "container:buz.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "mtandao.app"
-            BlueprintName = "mtandao"
-            ReferencedContainer = "container:mtandao.xcodeproj">
+            BuildableName = "buz.app"
+            BlueprintName = "buz"
+            ReferencedContainer = "container:buz.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
